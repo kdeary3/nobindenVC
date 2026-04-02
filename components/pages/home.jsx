@@ -3,12 +3,11 @@ const Home = () => {
     return (
         <>
             <h1>Home Page</h1>
-            <h2>About Us</h2>
-            <p>We are three brothers, Keno, Korbin and Kasden, who share a deep passion for technology, innovation, finance, and venture capital. All three of us have had the honor of attending the United States Military Academy at West Point (Classes of 2023, 2026, 2028), which has shaped our discipline, leadership, and drive for excellence. Our mission is to leverage our skills and experiences to innovate and invest in the tech and startup industries.</p>
-            <h2>The Meaning Behind "nobinden"</h2>
-            <p>The name "nobinden" is derived from the last few letters of each of our names: Ke<b>NO</b>, Kor<b>BIN</b>, and Kas<b>DEN</b>. It also carries the hidden meaning of "no bending," symbolizing the unbreakable bond we share as brothers. This name encapsulates our unity and our commitment to stand firm together in all our ventures.</p>
-            <h2>Our Investments</h2>
-            <p>We have made strategic investments in blue-chip technology companies, leveraging our expertise to support and grow innovative businesses in the tech industry. Our focus is on identifying and nurturing high-potential companies that are leading the way in technological advancements.</p>
+            <h2>What We Do</h2>
+            <p>At nobinden VC, we provide pre-seed funding to startup founders who are just starting out with their ideas. Our fund offers investments ranging from $1,000 to $3,000 to help turn ambitious concepts into tangible progress. We know that every great company starts with a bold idea and a determined founder ready to make it a reality.</p>
+
+
+            <p>We specialize in supporting startups at the idea stage because we understand that innovation begins with a spark. Like you, we are building something from the ground up. Our venture fund is on its own journey to grow into a leading force in early-stage investing, driven by a shared vision: to make the world a better place through technology and software.</p>
         </>
 )};
 
