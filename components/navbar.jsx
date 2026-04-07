@@ -15,7 +15,7 @@ const NobindenNavbar = () => {
         <Router>
             <Navbar expand="lg" className="bg-body-tertiary" sticky="top">
                 <Container fluid className="px-5">
-                    <Navbar.Brand as={Link} to="/home">React-Bootstrap</Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/home">nobindenVC</Navbar.Brand>
 
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" >
