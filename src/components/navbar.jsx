@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 
 // page imports
-import Home from "../components/pages/home.jsx";
-import About from "../components/pages/about.jsx";
-import Partners from "../components/pages/partners.jsx";
-import Portfolio from "../components/pages/portfolio.jsx";
-import Apply from "../components/pages/apply.jsx";
+import Home from "../pages/home.jsx";
+import About from "../pages/about.jsx";
+import Partners from "../pages/partners.jsx";
+import Portfolio from "../pages/portfolio.jsx";
+import Apply from "../pages/apply.jsx";
 
 
 const NobindenNavbar = () => {
