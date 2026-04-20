@@ -1,29 +1,12 @@
 import {Badge, Card, Stack} from "react-bootstrap";
+import {dashboardStyle} from "./dashboard_style.jsx";
+import DashboardStartupModal from "./dashboard_startup_modal.jsx";
 
-const dashboardStyle = {
-    pageBackground: {
-        backgroundColor: '#e2e4e6',
-        minHeight: '90vh',
-        width: '82vw',
-        padding: '1rem',
-        overflowX: 'auto',
-    },
-    columnBackground: {
-        backgroundColor: '#f4f5f7',
-        width: '320px',
-        borderRadius: '8px',
-        flexShrink: 0 // Prevents columns from squishing
-    },
-    cardStyle: {
-        backgroundColor: '#ffffff',
-        borderRadius: '4px',
-        cursor: 'pointer'
-    }
-};
-
-function StartupCard({ startup }) {
+function PipelineStartupCard({ startup, onClick }) {
     return (
-        <Card className="mb-2 shadow-sm border-0" style={dashboardStyle.cardStyle}>
+        <Card className="mb-2 shadow-sm border-0"
+              style={{...dashboardStyle.cardStyle, cursor: 'pointer'}}
+              onClick={onClick}>
             {startup.logo && <Card.Img variant="top" src={startup.logo} alt={startup.name} className="p-2" />}
             <Card.Body className="p-3">
                 <Card.Title className="h6 fw-bold mb-2">{startup.name}</Card.Title>
@@ -45,5 +28,5 @@ function StartupCard({ startup }) {
     );
 };
 
-export default StartupCard;
+export default PipelineStartupCard;
 
