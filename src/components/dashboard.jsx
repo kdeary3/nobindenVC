@@ -37,7 +37,7 @@ const Dashboard = () => {
     }
 
     const [allStartups] = useState([
-        { id: 1, name: "Startup 1", sector: "FinTech", eval: 9.5, equity: 3, funds_accrued: 500, projected_close: "02 APR 26", stage: "Preseed" },
+        { id: 1, name: "Google", sector: "Tech", eval: 9.5, equity: 3, funds_accrued: 500, projected_close: "02 APR 26", stage: "Series A" },
         { id: 2, name: "Startup 2", sector: "Health", eval: 12.0, equity: 5, funds_accrued: 250, projected_close: "15 MAY 26", stage: "Preseed" },
         { id: 3, name: "Startup 3", sector: "SaaS", eval: 4.2, equity: 10, funds_accrued: 100, projected_close: "10 JUN 26", stage: "Seed" },
         { id: 4, name: "Startup 4", sector: "AI", eval: 25.0, equity: 2, funds_accrued: 1200, projected_close: "01 AUG 26", stage: "Series A" },

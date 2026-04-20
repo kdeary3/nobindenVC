@@ -1,6 +1,5 @@
 import {Badge, Card, Stack} from "react-bootstrap";
 import {dashboardStyle} from "./dashboard_style.jsx";
-import DashboardStartupModal from "./dashboard_startup_modal.jsx";
 
 function PipelineStartupCard({ startup, onClick }) {
     return (
