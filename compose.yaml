@@ -1,0 +1,16 @@
+services:
+  postgres-db:
+    container_name: nobinden
+    image: postgres # use latest official postgres version
+    restart: always
+    environment:
+      POSTGRES_USER: nobinden
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: nobinden
+      POSTGRES_HOST_AUTH_METHOD: password
+    ports:
+      - "5469:5432"
+
+volumes:
+  postgresql_data:
+    driver: local
