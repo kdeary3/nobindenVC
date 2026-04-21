@@ -1,23 +1,7 @@
 import React, {useState} from "react";
 import {dashboardStyle} from "./dashboard/dashboard_style.jsx";
 import DashboardStartupModal from "./dashboard/dashboard_startup_modal.jsx";
-import {Badge, Button, Card} from "react-bootstrap";
-import PipelineStartupCard from "./dashboard/pipeline_startup_card.jsx";
-
-// Preseed, Seed, A, B, C Columns
-const PipelineColumns = ({ title, startups, onCardClick }) => {
-    return (
-        <Card className="border-0 shadow-sm me-3" style={dashboardStyle.columnBackground}>
-            <Card.Header className="bg-transparent border-0 fw-bold text-uppercase p-3" style={{ fontSize: '1rem', color: '#5e6c84' }}>
-                {title} <Badge bg="success" pill className="ms-1">{startups.length}</Badge>
-            </Card.Header>
-            <Card.Body className="pt-0 px-2 pb-2">
-                {startups.map(s => <PipelineStartupCard key={s.id} startup={s} onClick={() => onCardClick(s)}/>)}
-                <Button variant="light" className="w-100 text-start text-muted btn-sm border-0 mt-1">+ Add Startup</Button>
-            </Card.Body>
-        </Card>
-    );
-};
+import PipelineColumns from "./dashboard/pipeline_columns.jsx";
 
 const Dashboard = () => {
     // visibility + data
@@ -54,7 +38,7 @@ const Dashboard = () => {
     const stages = ["Preseed", "Seed", "Series A", "Series B", "Series C", "Exit"];
 
     return (
-        <div style={dashboardStyle.pageBackground}>
+        <div className="d-flex justify-content-between" style={dashboardStyle.pageBackground}>
             <div className="p-4">
                 <h1 className="h2 mb-4 fw-bold text-dark">Partner Dashboard</h1>
                 <div className="d-flex align-items-start pb-5">

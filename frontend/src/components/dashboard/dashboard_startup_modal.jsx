@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import {Badge, CardImg} from "react-bootstrap";
+import {Badge} from "react-bootstrap";
 
 function DashboardStartupModal({show, handleClose, startup}) {
     if (!startup) return null;
@@ -16,7 +16,7 @@ function DashboardStartupModal({show, handleClose, startup}) {
                     <div className="row g-3">
                         <div className="col-4">
                             <div className="p-3 border rounded bg-light mb-2">
-                                <img src={"/images/google.png"} alt="Card description" className="card-img" />
+                                <img src={"/images/google.png"} alt="Card description" className="card-img"/>
                                 <Modal.Title className="fw-bold">
                                     {startup.name} <br/>
                                     <Badge bg="info" className="text-dark">{startup.sector}</Badge> <br/>
@@ -55,37 +55,50 @@ function DashboardStartupModal({show, handleClose, startup}) {
                     </div>
 
                     <div className="row g-3">
-                        <div className="col-12">
+                        <div className="col-6">
                             <div className="p-3 border rounded bg-light mb-2">
-                                <span className="h6 mb-0">Projected Round Exit: AUG 2026</span> <br/>
-                                <span className="h6 mb-0">Primary Partner: Keno Deary</span>
+                                <small className="text-uppercase text-muted d-block">Projected Round Exit:</small>
+                                <span className="h6 mb-0">AUG 2026</span> <br/>
+                            </div>
+                        </div>
+                        <div className="col-6">
+                            <div className="p-3 border rounded bg-light mb-2">
+                                <small className="text-uppercase text-muted d-block">Primary Partner:</small>
+                                <span className="h6 mb-0">Keno Deary</span>
                             </div>
                         </div>
                     </div>
                     <div className="row g-3">
                         <div className="col-12">
                             <div className="p-3 border rounded bg-light mb-2">
-                                <span className="h6 mb-0">Notes: </span> <br/>
+                                <span className="h6 mb-0"> <strong>Notes:</strong></span> <br/>
                                 <span>
                                     <ul>
                                         <li>Spoke with founders on Apr 15, was updated on current growth trends, updated MVP.</li>
                                     </ul>
                                 </span>
+                                <button>+ Add Note</button>
                             </div>
                         </div>
                     </div>
 
                     <div className="row g-3">
                         <div className="col-4">
-                                <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-between">[Term Sheet]</div>
+                            <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-between">
+                                <button>See Term Sheet</button>
+                            </div>
                         </div>
 
                         <div className="col-4">
-                                <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-between">[Cap Table]</div>
+                            <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-between">
+                                <button>See Cap Table</button>
+                            </div>
                         </div>
 
                         <div className="col-4">
-                                <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-between">[Latest Deck]</div>
+                            <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-between">
+                                <button>See Most Recent Deck</button>
+                            </div>
                         </div>
                     </div>
                 </Modal.Body>
