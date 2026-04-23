@@ -34,3 +34,5 @@ gradlew.bat
 gradle
 build.gradle
 compose.yaml
+.gradle
+build
