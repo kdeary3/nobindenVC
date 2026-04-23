@@ -10,25 +10,38 @@ import java.util.Optional;
 public class StartupService {
 
     private final StartupRepository startupRepository;
+    private final Partner partner;
 
-    public StartupService(StartupRepository startupRepository) {
+    public StartupService(StartupRepository startupRepository, Partner partner) {
         this.startupRepository = startupRepository;
+        this.partner = partner;
     }
 
     public Startup saveStartup(Startup startup) {
         return startupRepository.save(startup);
     }
 
-    public List<Startup> findAllStartups() {
-        return startupRepository.findAll();
+    public List<Startup> saveAllStartups(List<Startup> startups) {
+        return startupRepository.saveAll(startups);
     }
 
-    public Optional<Startup> findStartupById(Long id) {
-        return startupRepository.findById(id);
+    public Startup findStartupById(Long id) {
+        return startupRepository.findById(id).orElseThrow();
+    }
+
+    public List<Startup> findAllStartups() {
+        return startupRepository.findAll();
     }
 
     public Optional<Startup> findStartupByPartner(Partner partner) {
         return startupRepository.findByPartner(partner);
     }
 
+    public void deleteStartupById(Long id) {
+        try {
+            startupRepository.deleteById(id);
+        } catch (IllegalArgumentException e) {
+            return;
+        }
+    }
 }

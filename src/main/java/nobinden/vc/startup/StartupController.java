@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 public class StartupController {
 
@@ -35,7 +34,7 @@ public class StartupController {
     }
 
     @GetMapping(value = "startup/id/", params = "id")
-    public Optional<Startup> getStartupById(@RequestParam Long id) {
+    public Startup getStartupById(@RequestParam Long id) {
         return startupService.findStartupById(id);
     }
 }
