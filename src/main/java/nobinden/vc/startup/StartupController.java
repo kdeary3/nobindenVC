@@ -1,12 +1,13 @@
 package nobinden.vc.startup;
 
-import nobinden.vc.partner.Partner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/api/v1/startup")
 public class StartupController {
 
     private final StartupService startupService;
@@ -15,26 +16,34 @@ public class StartupController {
         this.startupService = startupService;
     }
 
-    @PostMapping("/startup")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Startup saveNewStartup(@RequestBody Startup startup) {
         return startupService.saveStartup(startup);
     }
 
-    @GetMapping(value = "/startup")
+    @GetMapping()
     public List<Startup> getStartups() {
         return startupService.findAllStartups();
     }
 
-    @GetMapping("/startup/{startupPartner}")
-    public ResponseEntity<Startup> getStartupByPathVariable(@PathVariable("startupPartner") Partner partner) {
-        return startupService.findStartupByPartner(partner)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/{id}")
+    public ResponseEntity<Startup> findStartupById(@PathVariable Long id) {
+        try {
+            Startup startup = startupService.findStartupById(id);
+            return ResponseEntity.ok(startup);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @GetMapping(value = "startup/id/", params = "id")
-    public Startup getStartupById(@RequestParam Long id) {
-        return startupService.findStartupById(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Startup> deleteStartupById(@PathVariable Long id) {
+        try {
+            startupService.deleteStartupById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
