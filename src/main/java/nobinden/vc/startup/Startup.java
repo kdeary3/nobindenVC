@@ -1,5 +1,6 @@
 package nobinden.vc.startup;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import nobinden.vc.partner.Partner;
 
@@ -13,24 +14,39 @@ public class Startup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String sector;
     private String series;
 
-    @ElementCollection
-    @CollectionTable(name="startup_founders", joinColumns = @JoinColumn(name = "startup_id"))
-    @Column(name = "founder_name")
-    private List<String> founders = new ArrayList<>();
+    // New fields to match Frontend
+    private Double eval;
+    private Double equity;
 
-    @ElementCollection
-    @CollectionTable(name="funding_by_round", joinColumns = @JoinColumn(name = "startup_id"))
-    @MapKeyColumn(name = "round_name")
-    @Column(name = "amount")
-    private Map<String, Double> fundingByRound = new HashMap<>();
+    @JsonProperty("funds_accrued") // Maps Java field to JSON "funds_accrued"
+    @Column(name = "funds_accrued")
+    private Double fundsAccrued;
+
+    @JsonProperty("projected_close")
+    @Column(name = "projected_close")
+    private String projectedClose;
+
+    private String stage;
 
     @ManyToOne
     @JoinColumn(name = "partner_id")
     private Partner partner;
+
+    @ElementCollection
+    @CollectionTable(name = "startup_founders", joinColumns = @JoinColumn(name = "startup_id"))
+    @Column(name = "founder_name")
+    private List<String> founders = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "funding_by_round", joinColumns = @JoinColumn(name = "startup_id"))
+    @MapKeyColumn(name = "round_name")
+    @Column(name = "amount")
+    private Map<String, Double> fundingByRound = new HashMap<>();
 
     protected Startup() {}
 
@@ -41,6 +57,20 @@ public class Startup {
         this.founders = founders;
         this.fundingByRound = funding_by_round;
         this.partner = partner;
+    }
+
+    public Startup(String name, String sector, String series, Double eval, Double equity, Double fundsAccrued, String projectedClose, String stage, Partner partner, List<String> founders, Map<String, Double> fundingByRound) {
+        this.name = name;
+        this.sector = sector;
+        this.series = series;
+        this.eval = eval;
+        this.equity = equity;
+        this.fundsAccrued = fundsAccrued;
+        this.projectedClose = projectedClose;
+        this.stage = stage;
+        this.partner = partner;
+        this.founders = founders;
+        this.fundingByRound = fundingByRound;
     }
 
     public Long getId() {
