@@ -1,6 +1,5 @@
 package nobinden.vc.startup;
 
-import nobinden.vc.partner.Partner;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
