@@ -10,11 +10,9 @@ import java.util.Optional;
 public class StartupService {
 
     private final StartupRepository startupRepository;
-    private final Partner partner;
 
-    public StartupService(StartupRepository startupRepository, Partner partner) {
+    public StartupService(StartupRepository startupRepository) {
         this.startupRepository = startupRepository;
-        this.partner = partner;
     }
 
     public Startup saveStartup(Startup startup) {
@@ -31,10 +29,6 @@ public class StartupService {
 
     public List<Startup> findAllStartups() {
         return startupRepository.findAll();
-    }
-
-    public Optional<Startup> findStartupByPartner(Partner partner) {
-        return startupRepository.findByPartner(partner);
     }
 
     public void deleteStartupById(Long id) {
