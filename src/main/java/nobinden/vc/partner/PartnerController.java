@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/v1/partner")
 public class PartnerController {
 
 //    @GetMapping("/startup/{startupPartner}")
