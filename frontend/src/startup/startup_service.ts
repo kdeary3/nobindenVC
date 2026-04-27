@@ -1,17 +1,9 @@
 import axios, {type AxiosResponse} from 'axios'
 import type {Startup} from './startup_type'
 
-type GetStartups = () => Promise<Startup[]>
 type AxiosGetStartups = () => Promise<Startup[]>
 type AxiosSaveStartup = (startup: Startup) => Promise<Startup>
 type AxiosDeleteStartup = (id: number) => Promise<void>
-
-export const getAllStartups: GetStartups = async () => {
-    return fetch('api/v1/startup', {method: 'GET'})
-        .then( (response) => {
-            return response.json()
-        })
-}
 
 export const axiosGetAllStartups: AxiosGetStartups = async () => {
     return axios
