@@ -7,13 +7,13 @@ type AxiosDeleteStartup = (id: number) => Promise<void>
 
 export const axiosGetAllStartups: AxiosGetStartups = async () => {
     return axios
-        .get('api/v1/startup')
+        .get('/api/v1/startup')
         .then((response: AxiosResponse<Startup[]>)=> response.data)
 }
 
 export const axiosSaveStartup: AxiosSaveStartup = (startup: Startup) => {
     return axios
-        .post('api/v1/startup', startup)
+        .post('/api/v1/startup', startup)
         .then((response: AxiosResponse<Startup>) => response.data)
         .catch((error: unknown) => {
             console.error('Failed to save startup:', error);
@@ -23,7 +23,7 @@ export const axiosSaveStartup: AxiosSaveStartup = (startup: Startup) => {
 
 export const axiosDeleteStartup: AxiosDeleteStartup = (id: number) => {
     return axios
-        .delete('api/v1/startup/' + id)
+        .delete('/api/v1/startup/' + id)
         .then((response: AxiosResponse<void>) => response.data)
         .catch((error: unknown) => {
             console.error('Failed to delete startup:', error);
