@@ -18,7 +18,7 @@ const Dashboard = () => {
             const sanitizedData = data.map(s => ({
                 ...s,
                 // Ensure 'stage' is set, as that's what your columns filter by
-                series: s.series || "Preseed"
+                stage: s.stage || "Preseed"
             }));
             setAllStartups(sanitizedData);
         } catch (error) {
