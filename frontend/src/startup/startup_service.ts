@@ -31,7 +31,10 @@ export const axiosSaveStartup: AxiosSaveStartup = (startup: Startup) => {
 
 export const axiosDeleteStartup: AxiosDeleteStartup = (id: number) => {
     return axios
-        .delete('api/v1/startup' + "/" + id)
-        .then((response: AxiosResponse<void>)=> response.data)
-        .catch()
+        .delete('api/v1/startup/' + id)
+        .then((response: AxiosResponse<void>) => response.data)
+        .catch((error: unknown) => {
+            console.error('Failed to delete startup:', error);
+            throw error;
+        });
 }
