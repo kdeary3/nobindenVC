@@ -3,6 +3,7 @@ package nobinden.vc.startup;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.NoSuchElementException;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class StartupController {
         try {
             Startup startup = startupService.findStartupById(id);
             return ResponseEntity.ok(startup);
-        } catch (IllegalArgumentException e) {
+        } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
