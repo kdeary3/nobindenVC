@@ -1,4 +1,4 @@
-import Dashboard from "../components/dashboard.jsx";
+import Dashboard from "../components/dashboard.tsx";
 
 const Partners = () => {
     return(

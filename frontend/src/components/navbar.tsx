@@ -2,11 +2,11 @@ import { Routes, Route } from 'react-router-dom';
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-import Home from "../pages/home.jsx";
-import About from "../pages/about.jsx";
-import Partners from "../pages/partners.jsx";
-import Portfolio from "../pages/portfolio.jsx";
-import Apply from "../pages/apply.jsx";
+import Home from "../pages/home.tsx";
+import About from "../pages/about.tsx";
+import Partners from "../pages/partners.tsx";
+import Portfolio from "../pages/portfolio.tsx";
+import Apply from "../pages/apply.tsx";
 
 const NobindenNavbar = () => {
     return (

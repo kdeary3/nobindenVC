@@ -9,6 +9,6 @@ const Home = () => {
 
             <p>We specialize in supporting startups at the idea stage because we understand that innovation begins with a spark. Like you, we are building something from the ground up. Our venture fund is on its own journey to grow into a leading force in early-stage investing, driven by a shared vision: to make the world a better place through technology and software.</p>
         </>
-)};
+    )};
 
 export default Home;

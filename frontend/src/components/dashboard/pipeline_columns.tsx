@@ -1,6 +1,6 @@
 import {Badge, Button, Card} from "react-bootstrap";
-import {dashboardStyle} from "./dashboard_style.jsx";
-import PipelineStartupCard from "./pipeline_startup_card.jsx";
+import {dashboardStyle} from "./dashboard_style.tsx";
+import PipelineStartupCard from "./pipeline_startup_card.tsx";
 import {Droppable} from "@hello-pangea/dnd";
 
 // Preseed, Seed, A, B, C Columns

@@ -1,12 +1,12 @@
-import NobindenNavbar from "./components/navbar.jsx";
+import NobindenNavbar from "./components/navbar";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {Container} from "react-bootstrap";
 
-import Home from "./pages/home.jsx";
-import About from "./pages/about.jsx";
-import Partners from "./pages/partners.jsx";
-import Portfolio from "./pages/portfolio.jsx";
-import Apply from "./pages/apply.jsx";
+import Home from "./pages/home.tsx";
+import About from "./pages/about";
+import Partners from "./pages/partners";
+import Portfolio from "./pages/portfolio";
+import Apply from "./pages/apply";
 
 const App = () => {
     return (

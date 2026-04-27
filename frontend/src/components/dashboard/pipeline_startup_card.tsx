@@ -1,5 +1,5 @@
 import {Badge, Card, Stack} from "react-bootstrap";
-import {dashboardStyle} from "./dashboard_style.jsx";
+import {dashboardStyle} from "./dashboard_style.tsx";
 import {Draggable} from "@hello-pangea/dnd";
 
 function PipelineStartupCard({startup, onClick, index}) {
@@ -35,7 +35,6 @@ function PipelineStartupCard({startup, onClick, index}) {
                             <Badge bg="info" className="text-dark">{startup.sector}</Badge>
                         </Stack>
                     </Card.Body>
-
                 </Card>
             )}
         </Draggable>
