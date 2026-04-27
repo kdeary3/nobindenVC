@@ -38,10 +38,6 @@ public class StartupService {
     }
 
     public void deleteStartupById(Long id) {
-        try {
-            startupRepository.deleteById(id);
-        } catch (IllegalArgumentException e) {
-            return;
-        }
+        startupRepository.deleteById(id);  // Just this. No try-catch needed.
     }
 }
