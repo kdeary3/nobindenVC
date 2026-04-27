@@ -22,8 +22,11 @@ export const axiosGetAllStartups: AxiosGetStartups = async () => {
 export const axiosSaveStartup: AxiosSaveStartup = (startup: Startup) => {
     return axios
         .post('api/v1/startup', startup)
-        .then((response: AxiosResponse<Startup>)=> response.data)
-        .catch()
+        .then((response: AxiosResponse<Startup>) => response.data)
+        .catch((error: unknown) => {
+            console.error('Failed to save startup:', error);
+            throw error;
+        });
 }
 
 export const axiosDeleteStartup: AxiosDeleteStartup = (id: number) => {
