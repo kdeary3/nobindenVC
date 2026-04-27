@@ -3,7 +3,7 @@ import {dashboardStyle} from "./dashboard/dashboard_style";
 import DashboardStartupModal from "./dashboard/dashboard_startup_modal";
 import PipelineColumns from "./dashboard/pipeline_columns";
 import {DragDropContext} from "@hello-pangea/dnd";
-import {axiosDeleteStartup, axiosGetAllStartups} from '../startup/startup_service';
+import {axiosDeleteStartup, axiosGetAllStartups, axiosUpdateStartupStage} from '../startup/startup_service';
 import type {Startup} from '../startup/startup_type';
 
 
@@ -44,8 +44,11 @@ const Dashboard = () => {
         );
         setAllStartups(updatedStartups);
 
-        // TODO: Call an axiosUpdateStartupStage(draggableId, destination.droppableId)
-        // to persist the change in your PostgreSQL database.
+        try {
+            await axiosUpdateStartupStage(Number(draggableId), destination.droppableId)
+        } catch {
+            setAllStartups(allStartups)
+        }
     };
 
     // open dashboard startup modal
