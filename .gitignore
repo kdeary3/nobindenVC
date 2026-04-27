@@ -23,16 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-eslint.config.js
 package-lock.json
-package.json
 
 HELP.md
-settings.gradle
-gradlew
-gradlew.bat
-gradle
-build.gradle
 compose.yaml
 .gradle
 build
