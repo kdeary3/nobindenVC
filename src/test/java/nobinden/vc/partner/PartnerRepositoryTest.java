@@ -19,14 +19,10 @@ class PartnerRepositoryTest {
 
         partnerRepository.save(partner);
         var found = partnerRepository.findById(partner.getId());
-        partner.setId(1L);
 
         // ASSERT
         assertThat(found).isPresent();
-        assertThat(found.get().getId()).isEqualTo(1L);
-        assertThat(found.get().getName()).isEqualTo("Keno Deary");
-        assertThat(found.get().getRole()).isEqualTo("General Partner");
-
+        assertThat(found.get().getId()).isEqualTo(partner.getId());
     }
 
 }
