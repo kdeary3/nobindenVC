@@ -128,4 +128,44 @@ public class Startup {
     public void setPartner(Partner partner) {
         this.partner = partner;
     }
+
+    public Double getEval() {
+        return eval;
+    }
+
+    public void setEval(Double eval) {
+        this.eval = eval;
+    }
+
+    public Double getEquity() {
+        return equity;
+    }
+
+    public void setEquity(Double equity) {
+        this.equity = equity;
+    }
+
+    public Double getFundsAccrued() {
+        return fundsAccrued;
+    }
+
+    public void setFundsAccrued(Double fundsAccrued) {
+        this.fundsAccrued = fundsAccrued;
+    }
+
+    public String getProjectedClose() {
+        return projectedClose;
+    }
+
+    public void setProjectedClose(String projectedClose) {
+        this.projectedClose = projectedClose;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
+    }
 }
