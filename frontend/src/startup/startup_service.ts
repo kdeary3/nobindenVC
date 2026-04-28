@@ -3,12 +3,12 @@ import type {Startup} from './startup_type'
 
 // This is the frontend service.
 
-type AxiosGetStartups = () => Promise<Startup[]>
+type AxiosGetAllStartups = () => Promise<Startup[]>
 type AxiosSaveStartup = (startup: Startup) => Promise<Startup>
 type AxiosDeleteStartup = (id: number) => Promise<void>
 type AxiosUpdateStartupStage = (id: number, stage: string) => Promise<Startup>
 
-export const axiosGetAllStartups: AxiosGetStartups = async () => {
+export const axiosGetAllStartups: AxiosGetAllStartups = async () => {
     return axios
         .get('/api/v1/startup')
         .then((response: AxiosResponse<Startup[]>)=> response.data)
