@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/startup/application")
+@RequestMapping("/api/v1/application")
 public class ApplicationController {
 
     private final ApplicationService applicationService;
@@ -39,7 +39,7 @@ public class ApplicationController {
         return applicationService.findAllApplications();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Application> deleteApplicationById(@PathVariable Long id) {
         try {
             applicationService.deleteApplicationById(id);
