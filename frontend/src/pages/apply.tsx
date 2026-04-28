@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {useForm} from 'react-hook-form';
-import {object, string, number, boolean} from 'yup';
+import {useState} from 'react';
+import {useFieldArray, useForm} from 'react-hook-form';
+import {object, string, boolean, array, InferType} from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
-import {Button, Col, Row} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 
 const Apply = () => {
 
@@ -10,20 +10,21 @@ const Apply = () => {
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
-    const validation = object({
+    const applicationValidation = object({
         startup_name: string()
-            .max(20, "20 characters or less.")
+            .max(40, "20 characters or less.")
             .required("Startup name is required."),
         startup_sector: string()
             .max(20, "20 characters or less.")
             .required("Startup Sector is required."),
-        founder1: string()
-            .max(20, "20 characters or less.")
-            .required("Founder is required."),
-        founder2: string()
-            .max(20, "20 characters or less."),
-        founder3: string()
-            .max(20, "20 characters or less."),
+        founders: array()
+            .of(object({
+                name: string()
+                    .max(40, "20 characters or less")
+                    .required("Founder name is required.")
+            }))
+            .min(1, "At least 1 founder is required.")
+            .required(),
         email: string()
             .email("Invalid email format.")
             .required("Founder email is required."),
@@ -41,16 +42,24 @@ const Apply = () => {
         register,
         handleSubmit,
         reset,
-        formState: { errors },
+        control,
+        formState: {errors},
     } = useForm({
-        resolver: yupResolver(validation),
+        resolver: yupResolver(applicationValidation),
         defaultValues: {
+            founders: [{ name: "" }],
             target_round: "Preseed",
             upload_deck: true
         }
     });
 
-    const onSubmit = (data) => {
+    const {fields, append, remove} = useFieldArray({
+        control,
+        name: "founders"
+    });
+
+    type ApplicationForm = InferType<typeof applicationValidation>
+    const onSubmit = (data: ApplicationForm) => {
         console.log("Submission Success:", data);
         setSubmitApplication(true);
     };
@@ -85,38 +94,29 @@ const Apply = () => {
 
                 {/* Founder 1 */}
                 <div className="mb-3">
-                    <label className="form-label">Founder 1:</label>
-                    <input
-                        type="text"
-                        className={`form-control ${errors.founder1 ? 'is-invalid' : ''}`}
-                        {...register("founder1")}
-                        placeholder="John Doe"
-                    />
-                    {errors.founder1 && <div className="text-danger">{errors.founder1.message}</div>}
-                </div>
-
-                {/* Founder 2 */}
-                <div className="mb-3">
-                    <label className="form-label">Founder 2:</label>
-                    <input
-                        type="text"
-                        className={`form-control ${errors.founder2 ? 'is-invalid' : ''}`}
-                        {...register("founder2")}
-                        placeholder="John Doe"
-                    />
-                    {errors.founder2 && <div className="text-danger">{errors.founder2.message}</div>}
-                </div>
-
-                {/* Founder 3 */}
-                <div className="mb-3">
-                    <label className="form-label">Founder 3:</label>
-                    <input
-                        type="text"
-                        className={`form-control ${errors.founder3 ? 'is-invalid' : ''}`}
-                        {...register("founder3")}
-                        placeholder="John Doe"
-                    />
-                    {errors.founder3 && <div className="text-danger">{errors.founder3.message}</div>}
+                    <label className="form-label">Founders:</label>
+                    {fields.map((field, index) => (
+                        <div key={field.id} className="d-flex mb-2">
+                            <input
+                                className={`form-control ${errors.founders ?.[index] ?.name ? 'is-invalid' : ''}`}
+                                {...register(`founders.${index}.name`)}
+                                placeholder="John Doe"
+                            />
+                            {fields.length > 1 && (
+                                <button
+                                    type="button"
+                                    className="btn btn-danger ms-2"
+                                    onClick={() => remove(index)}
+                                >-</button>
+                            )}
+                        </div>
+                    ))}
+                    {errors.founders && <div className="text-danger">{errors.founders.message}</div>}
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary btn-sm mt-1"
+                        onClick={() => append({name: ""})}
+                    >+ Add Founder</button>
                 </div>
 
                 {/* Email */}
