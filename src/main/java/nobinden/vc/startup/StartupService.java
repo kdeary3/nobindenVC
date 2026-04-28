@@ -3,7 +3,6 @@ package nobinden.vc.startup;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StartupService {
@@ -31,6 +30,6 @@ public class StartupService {
     }
 
     public void deleteStartupById(Long id) {
-        startupRepository.deleteById(id);  // Just this. No try-catch needed.
+        startupRepository.deleteById(id);
     }
 }

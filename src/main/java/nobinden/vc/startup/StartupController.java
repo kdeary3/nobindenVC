@@ -23,11 +23,6 @@ public class StartupController {
         return startupService.saveStartup(startup);
     }
 
-    @GetMapping()
-    public List<Startup> getStartups() {
-        return startupService.findAllStartups();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Startup> findStartupById(@PathVariable Long id) {
         try {
@@ -36,6 +31,11 @@ public class StartupController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping()
+    public List<Startup> getStartups() {
+        return startupService.findAllStartups();
     }
 
     @DeleteMapping("/{id}")
