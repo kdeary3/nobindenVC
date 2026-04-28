@@ -1,8 +1,15 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {Badge} from "react-bootstrap";
+import type {Startup} from "../../startup/startup_type.ts";
 
-function DashboardStartupModal({show, handleClose, startup}) {
+type DashboardStartupModalProps = {
+    show: boolean;
+    handleClose: () => void;
+    startup: Startup | null;
+}
+
+function DashboardStartupModal({show, handleClose, startup}: DashboardStartupModalProps) {
     if (!startup) return null;
 
     return (

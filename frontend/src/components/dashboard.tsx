@@ -2,14 +2,13 @@ import {useEffect, useState} from "react";
 import {dashboardStyle} from "./dashboard/dashboard_style";
 import DashboardStartupModal from "./dashboard/dashboard_startup_modal";
 import PipelineColumns from "./dashboard/pipeline_columns";
-import {DragDropContext} from "@hello-pangea/dnd";
-import {axiosDeleteStartup, axiosGetAllStartups, axiosUpdateStartupStage} from '../startup/startup_service';
+import {DragDropContext, DropResult} from "@hello-pangea/dnd";
+import {axiosGetAllStartups, axiosUpdateStartupStage} from '../startup/startup_service';
 import type {Startup} from '../startup/startup_type';
-
 
 const Dashboard = () => {
     // visibility + data
-    const [allStartups, setAllStartups] = useState([]);
+    const [allStartups, setAllStartups] = useState<Startup[]>([]);
     const [showStartupModal, setShowStartupModal] = useState(false);
     const [selectedStartup, setSelectedStartup] = useState<Startup | null>(null);
     const loadData = async () => {
@@ -17,7 +16,6 @@ const Dashboard = () => {
             const data = await axiosGetAllStartups();
             const sanitizedData = data.map(s => ({
                 ...s,
-                // Ensure 'stage' is set, as that's what your columns filter by
                 stage: s.stage || "Preseed"
             }));
             setAllStartups(sanitizedData);
@@ -30,15 +28,14 @@ const Dashboard = () => {
         loadData();
     }, []);
 
-    const onDragEnd = async (result) => {
+    const onDragEnd = async (result: DropResult) => {
         const { destination, source, draggableId } = result;
         if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) {
             return;
         }
 
-        // Optimistic UI Update: Update locally first so the UI feels snappy
         const updatedStartups = allStartups.map(startup =>
-            startup.id.toString() === draggableId.toString() // Force both to string
+            startup.id.toString() === draggableId.toString()
                 ? { ...startup, stage: destination.droppableId }
                 : startup
         );
@@ -52,7 +49,7 @@ const Dashboard = () => {
     };
 
     // open dashboard startup modal
-    const handleOpenStartupModal = (startup) => {
+    const handleOpenStartupModal = (startup: Startup) => {
         setSelectedStartup(startup);
         setShowStartupModal(true);
     }

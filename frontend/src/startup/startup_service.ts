@@ -39,7 +39,7 @@ export const axiosUpdateStartupStage: AxiosUpdateStartupStage = (id: number, sta
         .patch(`/api/v1/startup/${id}/stage`, stage, {
             headers: { 'Content-Type': 'text/plain'}
         })
-        .then((response: AxiosResponse<void>) => response.data)
+        .then((response: AxiosResponse<Startup>) => response.data)
         .catch((error: unknown) => {
             console.error('Failed to update startup stage:', error);
             throw error;

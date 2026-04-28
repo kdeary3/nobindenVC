@@ -5,7 +5,7 @@ export const dashboardStyle = {
         width: '90vw',
         padding: '0rem',
         overflowX: 'auto',
-    },
+    } as const,
     columnBackground: {
         backgroundColor: '#f4f5f7',
         width: '350px',

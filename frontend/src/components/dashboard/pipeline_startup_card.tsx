@@ -1,8 +1,15 @@
 import {Badge, Card, Stack} from "react-bootstrap";
 import {dashboardStyle} from "./dashboard_style.tsx";
 import {Draggable} from "@hello-pangea/dnd";
+import type {Startup} from "../../startup/startup_type.ts";
 
-function PipelineStartupCard({startup, onClick, index}) {
+type PipelineStartupCardProps = {
+    startup: Startup;
+    onClick: () => void;
+    index: number;
+}
+
+function PipelineStartupCard({startup, onClick, index}: PipelineStartupCardProps) {
     return (
         <Draggable draggableId={startup.id.toString()} index={index}>
             {(provided) => (
@@ -14,7 +21,7 @@ function PipelineStartupCard({startup, onClick, index}) {
                       {...provided.dragHandleProps}
                 >
 
-                    {startup.logo && <Card.Img variant="top" src={startup.logo} alt={startup.name} className="p-2"/>}
+                    {/*{startup.logo && <Card.Img variant="top" src={startup.logo} alt={startup.name} className="p-2"/>}*/}
 
                     <Card.Body className="p-3">
                         <Card.Title className="h6 fw-bold mb-2">{startup.name}</Card.Title>
