@@ -48,11 +48,15 @@ public class StartupController {
         }
     }
 
-    @PostMapping("/{id}/stage")
+    @PatchMapping("/{id}/stage")
     public ResponseEntity<Startup> updateStartupStage(@PathVariable Long id, @RequestBody String stage) {
-        Startup startup = startupService.findStartupById(id);
-        startup.setStage(stage);
-        return ResponseEntity.ok(startupService.saveStartup(startup));
+        try {
+            Startup startup = startupService.findStartupById(id);
+            startup.setStage(stage);
+            return ResponseEntity.ok(startupService.saveStartup(startup));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
