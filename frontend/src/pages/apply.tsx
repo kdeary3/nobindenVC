@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useFieldArray, useForm} from 'react-hook-form';
 import {object, string, boolean, array, InferType} from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
-import {Button} from "react-bootstrap";
+import {Alert, Button} from "react-bootstrap";
 import {axiosSubmitApplication} from "../application/application_service.tsx";
 
 const Apply = () => {
@@ -74,7 +74,7 @@ const Apply = () => {
                 founders: data.founders.map(f => f.name),
                 founderEmail: data.email,
                 founderPhoneNumber: data.phone,
-                // deckUrl: data.upload_deck,
+                deckUrl: data.upload_deck,
                 additionalComments: data.additional_comments ?? "",
                 status: "Pending",
                 submittedAt: timeApplicationSubmittedAt
@@ -89,10 +89,12 @@ const Apply = () => {
 
     return (
         <>
-            <h1>Apply</h1>
             {submitApplication && (
-                <div className="alert alert-success">Application submitted successfully!</div>
+                <Alert key='success' variant='success' dismissible>
+                    Application submitted successfully! A partner will reach out shortly.
+                </Alert>
             )}
+            <h1>Apply</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
                 {/* Startup Name Field */}
                 <div className="mb-3">
