@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {Badge} from "react-bootstrap";
 import type {Startup} from "../../startup/startup_type.ts";
+import StartupCardFundingChart from "./startup_card_funding_chart.tsx";
 
 type DashboardStartupModalProps = {
     show: boolean;
@@ -49,15 +50,7 @@ function DashboardStartupModal({show, handleClose, startup}: DashboardStartupMod
                             </div>
                         </div>
                         <div className="col-4">
-                            <div className="p-3 border rounded bg-light mb-2">
-                                <small className="text-uppercase text-muted d-block">Funding By Round</small> <br/>
-                                <span className="h4 mb-0">${startup.funds_accrued}k</span><br/>
-                                <span className="h4 mb-0">${startup.funds_accrued}k</span><br/>
-                                <span className="h4 mb-0">${startup.funds_accrued}k</span><br/>
-                                <span className="h4 mb-0">${startup.funds_accrued}k</span><br/>
-                                <span className="h4 mb-0">${startup.funds_accrued}k</span><br/>
-                                <span className="h4 mb-0">${startup.funds_accrued}k</span>
-                            </div>
+                            <StartupCardFundingChart startup={startup}/>
                         </div>
                     </div>
 
