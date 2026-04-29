@@ -1,13 +1,14 @@
 
 export type Application = {
-    id: number
+    id?: number
     name: string
     sector: string
     founders: string[]
     founderEmail: string
     founderPhoneNumber: string
-    deckUrl: string
-    additionalComments: string
+    targetRound: string
+    deckUrl?: boolean
+    additionalComments?: string
     status: string
     submittedAt: string
 }

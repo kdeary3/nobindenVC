@@ -16,7 +16,7 @@ export const axiosGetAllApplications: AxiosGetAllApplications = () => {
         })
 }
 
-export const axiosSaveApplication: AxiosSaveApplication = (application: Application) => {
+export const axiosSubmitApplication: AxiosSaveApplication = (application: Application) => {
     return axios
         .post('/api/v1/application', application)
         .then((response: AxiosResponse<Application>) => response.data)
