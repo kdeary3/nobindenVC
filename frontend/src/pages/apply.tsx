@@ -3,20 +3,19 @@ import {useFieldArray, useForm} from 'react-hook-form';
 import {object, string, boolean, array, InferType} from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Button} from "react-bootstrap";
+import {axiosSubmitApplication} from "../application/application_service.tsx";
 
 const Apply = () => {
 
     const [submitApplication, setSubmitApplication] = useState(false);
 
-    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
     const applicationValidation = object({
         startup_name: string()
-            .max(40, "20 characters or less.")
+            .max(40, "40 characters or less.")
             .required("Startup name is required."),
         startup_sector: string()
             .max(20, "20 characters or less.")
-            .required("Startup Sector is required."),
+            .required("Startup sector is required."),
         founders: array()
             .of(object({
                 name: string()
@@ -24,12 +23,18 @@ const Apply = () => {
                     .required("Founder name is required.")
             }))
             .min(1, "At least 1 founder is required.")
-            .required(),
+            .max(5, "Maximum of 5 founders.")
+            .required("Founder name is required."),
         email: string()
             .email("Invalid email format.")
             .required("Founder email is required."),
         phone: string()
-            .matches(phoneRegExp, 'Phone number is not valid.')
+            .transform((value) => value.replace(/\D/g, ""))
+            .min(10, "Phone number must be at least 10 digits.")
+            .max(11, "Phone number cannot exceed 11 digits.")
+            .test("is-numeric", "Phone must only contain numbers", (value) =>
+                !value || /^\d+$/.test(value)
+            )
             .required("Phone is required."),
         target_round: string()
             .required("Please select a target round."),
@@ -43,7 +48,7 @@ const Apply = () => {
         handleSubmit,
         reset,
         control,
-        formState: {errors},
+        formState: {errors, isSubmitting},
     } = useForm({
         resolver: yupResolver(applicationValidation),
         defaultValues: {
@@ -59,14 +64,35 @@ const Apply = () => {
     });
 
     type ApplicationForm = InferType<typeof applicationValidation>
-    const onSubmit = (data: ApplicationForm) => {
-        console.log("Submission Success:", data);
-        setSubmitApplication(true);
+    const onSubmit = async (data: ApplicationForm) => {
+        try {
+            const timeApplicationSubmittedAt = new Date().toISOString()
+            await axiosSubmitApplication({
+                name: data.startup_name,
+                sector: data.startup_sector,
+                targetRound: data.target_round,
+                founders: data.founders.map(f => f.name),
+                founderEmail: data.email,
+                founderPhoneNumber: data.phone,
+                // deckUrl: data.upload_deck,
+                additionalComments: data.additional_comments ?? "",
+                status: "Pending",
+                submittedAt: timeApplicationSubmittedAt
+            })
+            console.log("Submission Success:", data);
+            setSubmitApplication(true);
+            reset();
+        } catch (error) {
+            console.log("Failed to submit application:", error)
+        }
     };
 
     return (
         <>
             <h1>Apply</h1>
+            {submitApplication && (
+                <div className="alert alert-success">Application submitted successfully!</div>
+            )}
             <form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
                 {/* Startup Name Field */}
                 <div className="mb-3">
@@ -111,7 +137,8 @@ const Apply = () => {
                             )}
                         </div>
                     ))}
-                    {errors.founders && <div className="text-danger">{errors.founders.message}</div>}
+                    {errors.founders &&
+                        <div className="text-danger d-block">{errors.founders.message}</div>}
                     <button
                         type="button"
                         className="btn btn-outline-secondary btn-sm mt-1"
@@ -147,15 +174,15 @@ const Apply = () => {
                 {/* Radio Buttons */}
                 <div className="mb-3">
                     <label className="form-label d-block">Target Round:</label>
-                    {["Preseed", "Seed", "Series A", "Series B", "Series C"].map((round) => (
-                        <div className="form-check form-check-inline" key={round}>
+                    {["Preseed", "Seed", "Series A", "Series B", "Series C"].map((target_round) => (
+                        <div className="form-check form-check-inline" key={target_round}>
                             <input
                                 className="form-check-input"
                                 type="radio"
-                                value={round}
+                                value={target_round}
                                 {...register("target_round")}
                             />
-                            <label className="form-check-label">{round}</label>
+                            <label className="form-check-label">{target_round}</label>
                         </div>
                     ))}
                     {errors.target_round &&
@@ -171,10 +198,23 @@ const Apply = () => {
                         {...register("upload_deck")} />
                 </div>
 
+                {/* Additional Comments */}
+                <div className="mb-3">
+                    <label className="form-label">Additional Comments:</label>
+                    <input
+                        type="text"
+                        className={`form-control ${errors.additional_comments ? 'is-invalid' : ''}`}
+                        {...register("additional_comments")}
+                        placeholder="Additional Comments"
+                    />
+                    {errors.additional_comments && <div className="text-danger">{errors.additional_comments.message}</div>}
+                </div>
+
                 {/* Submit Application Buttons */}
                 <div className="mb-3">
-                    <Button type="submit" variant="success" className="me-2">
-                        <i className="fa-solid fa-check me-2"></i> Submit
+                    <Button type="submit" variant="success" className="me-2" disabled={isSubmitting}>
+                        <i className="fa-solid fa-check me-2"></i>
+                        {isSubmitting ? 'Submitting...' : 'Submit'}
                     </Button>
                     <Button type="button" variant="danger" onClick={() => reset()}>Reset</Button>
                 </div>
