@@ -50,7 +50,8 @@ function DashboardStartupModal({show, handleClose, startup}: DashboardStartupMod
                             </div>
                         </div>
                         <div className="col-4">
-                            <StartupCardFundingChart startup={startup}/>
+                            {/*<StartupCardFundingChart startup={startup}/>*/}
+                            <StartupCardFundingChart/>
                         </div>
                     </div>
 

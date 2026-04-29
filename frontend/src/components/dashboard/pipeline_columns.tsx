@@ -2,9 +2,16 @@ import {Badge, Button, Card} from "react-bootstrap";
 import {dashboardStyle} from "./dashboard_style.tsx";
 import PipelineStartupCard from "./pipeline_startup_card.tsx";
 import {Droppable} from "@hello-pangea/dnd";
+import {Startup} from "../../startup/startup_type.ts";
+
+type PipelineColumnsProps = {
+    title: string
+    startups: Startup[]
+    onCardClick: (startup: Startup) => void
+}
 
 // Preseed, Seed, A, B, C Columns
-const PipelineColumns = ({title, startups, onCardClick}) => {
+const PipelineColumns = ({title, startups, onCardClick}: PipelineColumnsProps) => {
     return (
         <Droppable droppableId={title}>
             {(provided) => (
