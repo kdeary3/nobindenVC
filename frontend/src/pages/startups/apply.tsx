@@ -3,7 +3,7 @@ import {useFieldArray, useForm} from 'react-hook-form';
 import {object, string, boolean, array, InferType} from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Alert, Button} from "react-bootstrap";
-import {axiosSubmitApplication} from "../application/application_service.tsx";
+import {axiosSubmitApplication} from "../../application/application_service.tsx";
 
 const Apply = () => {
 

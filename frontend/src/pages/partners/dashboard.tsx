@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
-import {dashboardStyle} from "../components/dashboard/dashboard_style";
-import StartupModal from "../components/dashboard/startup_modal";
-import PipelineColumns from "../components/dashboard/pipeline_columns";
+import {dashboardStyle} from "../../components/dashboard/dashboard_style";
+import StartupModal from "../../components/dashboard/startup_modal";
+import PipelineColumns from "../../components/dashboard/pipeline_columns";
 import {DragDropContext, DropResult} from "@hello-pangea/dnd";
-import {axiosDeleteStartup, axiosGetAllStartups, axiosUpdateStartupStage} from '../startup/startup_service';
-import type {Startup} from '../startup/startup_type';
+import {axiosDeleteStartup, axiosGetAllStartups, axiosUpdateStartupStage} from '../../startup/startup_service';
+import type {Startup} from '../../startup/startup_type';
 
 const Dashboard = () => {
     // visibility + data

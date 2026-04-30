@@ -1,12 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-
-import Home from "../pages/home.tsx";
-import About from "../pages/about.tsx";
-import Partners from "../pages/partners.tsx";
-import Portfolio from "../pages/portfolio.tsx";
-import Apply from "../pages/apply.tsx";
 
 const NobindenNavbar = () => {
     return (
@@ -22,11 +15,13 @@ const NobindenNavbar = () => {
                         <Nav className="me-auto">
                             <LinkContainer to="/home"><Nav.Link>Home</Nav.Link></LinkContainer>
                             <LinkContainer to="/about"><Nav.Link>About</Nav.Link></LinkContainer>
-                            <LinkContainer to="/partners"><Nav.Link>Partners</Nav.Link></LinkContainer>
-
+                            <NavDropdown title="Partners" id="basic-nav-dropdown">
+                                <LinkContainer to="partners/dashboard"><NavDropdown.Item>Dashboard</NavDropdown.Item></LinkContainer>
+                                <LinkContainer to="partners/startup-applications"><NavDropdown.Item>Startup Applications</NavDropdown.Item></LinkContainer>
+                            </NavDropdown>
                             <NavDropdown title="Startups" id="basic-nav-dropdown">
-                                <LinkContainer to="/portfolio"><NavDropdown.Item>Our Portfolio</NavDropdown.Item></LinkContainer>
-                                <LinkContainer to="/apply"><NavDropdown.Item>Apply</NavDropdown.Item></LinkContainer>
+                                <LinkContainer to="startups/portfolio"><NavDropdown.Item>Our Portfolio</NavDropdown.Item></LinkContainer>
+                                <LinkContainer to="startups/apply"><NavDropdown.Item>Apply</NavDropdown.Item></LinkContainer>
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>

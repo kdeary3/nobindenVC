@@ -1,12 +1,13 @@
-import NobindenNavbar from "./components/navbar";
+import NobindenNavbar from "./pages/navbar";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {Container} from "react-bootstrap";
 
 import Home from "./pages/home.tsx";
 import About from "./pages/about";
-import Partners from "./pages/partners";
-import Portfolio from "./pages/portfolio";
-import Apply from "./pages/apply";
+import Dashboard from "./pages/partners/dashboard.tsx";
+import Portfolio from "./pages/startups/portfolio.tsx";
+import StartupApplications from "./pages/partners/startup_applications.tsx";
+import Apply from "./pages/startups/apply.tsx";
 
 const App = () => {
     return (
@@ -16,9 +17,10 @@ const App = () => {
                 <Routes> {/* All logic lives here */}
                     <Route path="/home" element={<Home />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/partners" element={<Partners />} />
+                    <Route path="/partners/dashboard" element={<Dashboard />} />
+                    <Route path="/partners/startup-applications" element={<StartupApplications />} />
                     <Route path="/portfolio" element={<Portfolio />} />
-                    <Route path="/apply" element={<Apply />} />
+                    <Route path="/startups/apply" element={<Apply />} />
                     <Route path="/" element={<Home />} />
                 </Routes>
             </Container>

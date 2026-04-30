@@ -10,25 +10,11 @@ type PipelineColumnsProps = {
     title: string
     startups: Startup[]
     onCardClick: (startup: Startup) => void
+    onStartupAdded: () => void
 }
 
-// Preseed, Seed, A, B, C Columns
-const PipelineColumns = ({title, startups, onCardClick}: PipelineColumnsProps) => {
+const PipelineColumns = ({title, startups, onCardClick, onStartupAdded}: PipelineColumnsProps) => {
     const [showAddStartupModal, setShowAddStartupModal] = useState(false);
-    const [selectedStartup, setSelectedStartup] = useState<Startup | null>(null);
-
-
-    // open dashboard startup modal
-    const handleOpenStartupModal = (startup: Startup) => {
-        setSelectedStartup(startup);
-        setShowAddStartupModal(true);
-    }
-
-    // close dashboard startup modal
-    const handleCloseAddStartupModal = () => {
-        setSelectedStartup(null);
-        setShowAddStartupModal(false);
-    }
 
     return (
         <>
@@ -44,25 +30,30 @@ const PipelineColumns = ({title, startups, onCardClick}: PipelineColumnsProps) =
                             {title} <Badge bg="success" pill className="ms-1">{startups.length}</Badge>
                         </Card.Header>
                         <Card.Body className="pt-0 px-2 pb-2">
-                            {startups.map(((s, index) =>
+                            {startups.map((s, index) =>
                                 <StartupCard
                                     key={s.id}
                                     startup={s}
                                     index={index}
                                     onClick={() => onCardClick(s)}
-                                />))}
+                                />)}
                             {provided.placeholder}
                             <Button variant="light" className="w-100 text-start text-muted btn-sm border-0 mt-1"
-                                    onClick={() => setShowAddStartupModal(true)}
-                            >+ Add Startup</Button>
+                                    onClick={() => setShowAddStartupModal(true)}>
+                                + Add Startup
+                            </Button>
                         </Card.Body>
                     </Card>
                 )}
             </Droppable>
             <AddStartup
                 show={showAddStartupModal}
-                handleClose={handleCloseAddStartupModal}
-                startup={selectedStartup}
+                handleClose={() => setShowAddStartupModal(false)}
+                stage={title}
+                onSuccess={() => {
+                    setShowAddStartupModal(false);
+                    onStartupAdded();
+                }}
             />
         </>
     );

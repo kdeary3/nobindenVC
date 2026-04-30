@@ -4,13 +4,14 @@ import {Badge} from "react-bootstrap";
 import type {Startup} from "../../startup/startup_type.ts";
 import StartupCardFundingChart from "./startup_card_funding_chart.tsx";
 
-type DashboardStartupModalProps = {
+type StartupModalProps = {
     show: boolean;
     handleClose: () => void;
+    handleDelete: () => void;
     startup: Startup | null;
 }
 
-function StartupModal({show, handleClose, startup}: DashboardStartupModalProps) {
+function StartupModal({show, handleClose, handleDelete, startup}: StartupModalProps) {
     if (!startup) return null;
 
     return (
@@ -104,8 +105,11 @@ function StartupModal({show, handleClose, startup}: DashboardStartupModalProps) 
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="outline-secondary" onClick={handleClose}>
-                        Dismiss
+                    <Button variant="danger" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
                     </Button>
                 </Modal.Footer>
             </Modal>
