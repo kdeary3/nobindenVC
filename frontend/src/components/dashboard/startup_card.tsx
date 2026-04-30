@@ -9,7 +9,7 @@ type PipelineStartupCardProps = {
     index: number;
 }
 
-function PipelineStartupCard({startup, onClick, index}: PipelineStartupCardProps) {
+function StartupCard({startup, onClick, index}: PipelineStartupCardProps) {
     return (
         <Draggable draggableId={startup.id.toString()} index={index}>
             {(provided) => (
@@ -48,5 +48,5 @@ function PipelineStartupCard({startup, onClick, index}: PipelineStartupCardProps
     );
 };
 
-export default PipelineStartupCard;
+export default StartupCard;
 
