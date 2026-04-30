@@ -10,7 +10,7 @@ type DashboardStartupModalProps = {
     startup: Startup | null;
 }
 
-function DashboardStartupModal({show, handleClose, startup}: DashboardStartupModalProps) {
+function StartupModal({show, handleClose, startup}: DashboardStartupModalProps) {
     if (!startup) return null;
 
     return (
@@ -113,4 +113,4 @@ function DashboardStartupModal({show, handleClose, startup}: DashboardStartupMod
     );
 }
 
-export default DashboardStartupModal;
+export default StartupModal;

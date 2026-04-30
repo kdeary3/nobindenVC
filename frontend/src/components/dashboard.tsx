@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {dashboardStyle} from "./dashboard/dashboard_style";
-import DashboardStartupModal from "./dashboard/dashboard_startup_modal";
+import DashboardStartupModal from "./dashboard/startup_modal";
 import PipelineColumns from "./dashboard/pipeline_columns";
 import {DragDropContext, DropResult} from "@hello-pangea/dnd";
 import {axiosGetAllStartups, axiosUpdateStartupStage} from '../startup/startup_service';
