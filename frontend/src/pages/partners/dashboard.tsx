@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import {dashboardStyle} from "./dashboard/dashboard_style";
-import DashboardStartupModal from "./dashboard/startup_modal";
-import PipelineColumns from "./dashboard/pipeline_columns";
+import {dashboardStyle} from "../components/dashboard/dashboard_style";
+import StartupModal from "../components/dashboard/startup_modal";
+import PipelineColumns from "../components/dashboard/pipeline_columns";
 import {DragDropContext, DropResult} from "@hello-pangea/dnd";
-import {axiosGetAllStartups, axiosUpdateStartupStage} from '../startup/startup_service';
+import {axiosDeleteStartup, axiosGetAllStartups, axiosUpdateStartupStage} from '../startup/startup_service';
 import type {Startup} from '../startup/startup_type';
 
 const Dashboard = () => {
@@ -60,6 +60,13 @@ const Dashboard = () => {
         setShowStartupModal(false);
     }
 
+    const handleDeleteStartup = async () => {
+        if (!selectedStartup) return
+        await axiosDeleteStartup(selectedStartup.id)
+        handleCloseStartupModal()
+        loadData()
+    }
+
     const stages = ["Preseed", "Seed", "Series A", "Series B", "Series C", "Exit"];
 
     return (
@@ -74,14 +81,16 @@ const Dashboard = () => {
                                 title={stage}
                                 startups={allStartups.filter(s => s.stage === stage)}
                                 onCardClick={handleOpenStartupModal}
+                                onStartupAdded={loadData}
                             />
                         ))}
                     </div>
                 </DragDropContext>
             </div>
-            <DashboardStartupModal
+            <StartupModal
                 show={showStartupModal}
                 handleClose={handleCloseStartupModal}
+                handleDelete={handleDeleteStartup}
                 startup={selectedStartup}
             />
         </div>
