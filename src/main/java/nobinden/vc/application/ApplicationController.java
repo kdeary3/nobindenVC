@@ -3,6 +3,8 @@ package nobinden.vc.application;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 
@@ -40,12 +42,24 @@ public class ApplicationController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Application> deleteApplicationById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteApplicationById(@PathVariable Long id) {
         try {
             applicationService.deleteApplicationById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Application> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        try {
+            String newStatus = body.get("status");
+            // Delegate to service instead of repository
+            Application updatedApp = applicationService.updateApplicationStatus(id, newStatus);
+            return ResponseEntity.ok(updatedApp);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 

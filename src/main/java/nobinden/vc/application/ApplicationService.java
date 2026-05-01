@@ -3,6 +3,7 @@ package nobinden.vc.application;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ApplicationService {
@@ -30,7 +31,16 @@ public class ApplicationService {
     }
 
     public void deleteApplicationById(Long id) {
+        if (!applicationRepository.existsById(id)) {
+            throw new NoSuchElementException("Cannot delete: Application " + id + " not found");
+        }
         applicationRepository.deleteById(id);
+    }
+    public Application updateApplicationStatus(Long id, String status) {
+        Application app = applicationRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Application not found"));
+        app.setStatus(status);
+        return applicationRepository.save(app);
     }
 
 }

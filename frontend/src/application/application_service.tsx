@@ -45,3 +45,8 @@ export const axiosUpdateApplication: AxiosUpdateApplication = (id: number, appli
             throw error;
         });
 }
+
+export const axiosUpdateApplicationStatus = async (id: number, status: string) => {
+    const response = await axios.patch(`/api/v1/applications/${id}/status`, { status });
+    return response.data;
+};

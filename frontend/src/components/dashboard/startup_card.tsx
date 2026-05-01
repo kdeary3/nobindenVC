@@ -26,8 +26,8 @@ function StartupCard({startup, onClick, index}: PipelineStartupCardProps) {
                     <Card.Body className="p-3">
                         <Card.Title className="h6 fw-bold mb-2">{startup.name}</Card.Title>
                         <div className="small text-muted mb-3">
-                            <div className="d-flex justify-content-between"><span>Eval:</span> <strong>{startup.eval} /
-                                10</strong></div>
+                            <div className="d-flex justify-content-between"><span>Eval:</span> <strong>{startup.eval} / 10
+                            </strong></div>
                             <div className="d-flex justify-content-between"><span>Equity:</span>
                                 <strong>{startup.equity}%</strong></div>
                             <div className="d-flex justify-content-between"><span>Total Funds Accrued:</span>

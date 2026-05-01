@@ -1,9 +1,11 @@
 package nobinden.vc.startup;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import nobinden.vc.partner.Partner;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,18 +20,17 @@ public class Startup {
     private String name;
     private String sector;
     private String series;
-
-    // New fields to match Frontend
     private Double eval;
     private Double equity;
 
-    @JsonProperty("funds_accrued") // Maps Java field to JSON "funds_accrued"
+    @JsonProperty("funds_accrued")
     @Column(name = "funds_accrued")
     private Double fundsAccrued;
 
     @JsonProperty("projected_close")
     @Column(name = "projected_close")
-    private String projectedClose;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd MMM yy")
+    private LocalDate projectedClose;
 
     private String stage;
 
@@ -48,7 +49,8 @@ public class Startup {
     @Column(name = "amount")
     private Map<String, Double> fundingByRound = new HashMap<>();
 
-    protected Startup() {}
+    protected Startup() {
+    }
 
     public Startup(String name, String sector, String series, List<String> founders, Map<String, Double> funding_by_round, Partner partner) {
         this.name = name;
@@ -59,7 +61,7 @@ public class Startup {
         this.partner = partner;
     }
 
-    public Startup(String name, String sector, String series, Double eval, Double equity, Double fundsAccrued, String projectedClose, String stage, Partner partner, List<String> founders, Map<String, Double> fundingByRound) {
+    public Startup(String name, String sector, String series, Double eval, Double equity, Double fundsAccrued, LocalDate projectedClose, String stage, Partner partner, List<String> founders, Map<String, Double> fundingByRound) {
         this.name = name;
         this.sector = sector;
         this.series = series;
@@ -153,11 +155,11 @@ public class Startup {
         this.fundsAccrued = fundsAccrued;
     }
 
-    public String getProjectedClose() {
+    public LocalDate getProjectedClose() {
         return projectedClose;
     }
 
-    public void setProjectedClose(String projectedClose) {
+    public void setProjectedClose(LocalDate projectedClose) {
         this.projectedClose = projectedClose;
     }
 
