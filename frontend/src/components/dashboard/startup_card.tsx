@@ -9,7 +9,25 @@ type PipelineStartupCardProps = {
     index: number;
 }
 
+const formatCurrency = (value: number) => {
+    if (!value && value !== 0) return "$0";
+
+    // If value is 1,000 (1,000k) or more, convert to Millions
+    if (value >= 1000) {
+        return `$${(value / 1000).toFixed(1)}M`;
+    }
+
+    // Otherwise keep it as k
+    return `$${value.toLocaleString()}k`;
+};
+
 function StartupCard({startup, onClick, index}: PipelineStartupCardProps) {
+    const getEvalStyle = (score: number) => {
+        if (score >= 9) return { color: '#198754', fontWeight: '800' }; // Success Green
+        if (score >= 7.5) return { color: '#ffc107', fontWeight: '800' }; // Warning Yellow
+        if (score >= 6) return { color: '#dc3545', fontWeight: '800' }; // Danger Red
+        return { color: '#6c757d', fontWeight: '800' };                // Muted Gray
+    };
     return (
         <Draggable draggableId={startup.id.toString()} index={index}>
             {(provided) => (
@@ -26,12 +44,18 @@ function StartupCard({startup, onClick, index}: PipelineStartupCardProps) {
                     <Card.Body className="p-3">
                         <Card.Title className="h6 fw-bold mb-2">{startup.name}</Card.Title>
                         <div className="small text-muted mb-3">
-                            <div className="d-flex justify-content-between"><span>Eval:</span> <strong>{startup.eval} / 10
-                            </strong></div>
+                            <div className="d-flex justify-content-between align-items-center">
+                                <span>Eval:</span>
+                                <span style={getEvalStyle(startup.eval)}>
+                                    {startup.eval?.toFixed(1) || '0.0'} / 10
+                                </span>
+                            </div>
                             <div className="d-flex justify-content-between"><span>Equity:</span>
                                 <strong>{startup.equity}%</strong></div>
+
                             <div className="d-flex justify-content-between"><span>Total Funds Accrued:</span>
-                                <strong>${startup.funds_accrued}k</strong></div>
+                                <strong>{formatCurrency(startup.funds_accrued)}</strong></div>
+
                             <div className="d-flex justify-content-between"><span>Projected Round Close:</span>
                                 <Badge bg="light"
                                        className="fw-large text-muted border"><strong>{startup.projected_close}</strong></Badge>
