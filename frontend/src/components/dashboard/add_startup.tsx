@@ -142,6 +142,17 @@ function AddStartup({show, handleClose, stage, onSuccess}: AddStartupProps) {
                                     <Form.Control name="projected_close" value={form.projected_close}
                                                   onChange={handleChange}/>
                                 </Form.Group>
+
+                                {/*<Form.Group className="mb-3">*/}
+                                {/*    <Form.Label>Projected Close</Form.Label>*/}
+                                {/*    <Form.Control*/}
+                                {/*        type="date"*/}
+                                {/*        name="projected_close"*/}
+                                {/*        value={form.projected_close}*/}
+                                {/*        onChange={handleChange}*/}
+                                {/*    />*/}
+                                {/*</Form.Group>*/}
+
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button variant="outline-secondary" onClick={handleClose}>Cancel</Button>
