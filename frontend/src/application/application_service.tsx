@@ -1,5 +1,5 @@
-import {Application} from "./application_type";
-import axios, {AxiosResponse} from "axios";
+import type {Application} from "./application_type";
+import axios, {type AxiosResponse} from "axios";
 
 type AxiosGetAllApplications = () => Promise<Application[]>
 type AxiosSaveApplication = (application: Application) => Promise<Application>
