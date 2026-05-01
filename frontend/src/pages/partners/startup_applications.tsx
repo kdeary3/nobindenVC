@@ -29,6 +29,7 @@ const ReviewApplications = () => {
                     <th>Target Round</th>
                     <th>Founders</th>
                     <th>Contact</th>
+                    <th>Pitch Deck</th>
                     <th>Submitted</th>
                     <th>Status</th>
                 </tr>
@@ -44,6 +45,7 @@ const ReviewApplications = () => {
                             <div>{startup.founderEmail}</div>
                             <small className="text-muted">{startup.founderPhoneNumber}</small>
                         </td>
+                        <td>{startup.deckUrl}</td>
                         <td>{new Date(startup.submittedAt).toLocaleDateString()}</td>
                         <td>
                             <Badge bg={statusVariant(startup.status)}>{startup.status}</Badge>
