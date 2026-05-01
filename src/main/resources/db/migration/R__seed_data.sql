@@ -1,40 +1,196 @@
--- Insert the partner first so we can reference their id
-INSERT INTO partner (name, role)
-VALUES ('Keno Deary', 'General Partner');
+-- Repeatable migration: truncate first so re-runs stay clean
+TRUNCATE funding_by_round, application_founders, startup_founders, application, startup, partner RESTART IDENTITY CASCADE;
 
--- Insert startups, all linked to Keno Deary
+-- ============================================================
+-- PARTNERS
+-- ============================================================
+INSERT INTO partner (name, role)
+VALUES ('Keno Deary', 'General Partner'),
+       ('Marc Andreessen', 'General Partner'),
+       ('Peter Fenton', 'General Partner'),
+       ('Paul Graham', 'General Partner'),
+       ('Michael Moritz', 'General Partner');
+
+-- ============================================================
+-- STARTUPS
+-- ============================================================
 INSERT INTO startup (name, sector, series, eval, equity, funds_accrued, projected_close, stage, partner_id)
 VALUES ('Google', 'Tech', NULL, 9.5, 3, 500, '02 APR 26', 'Series A',
-        (SELECT id FROM partner WHERE name = 'Keno Deary')),
+        (SELECT id FROM partner WHERE name = 'Michael Moritz')),
        ('Stripe', 'FinTech', NULL, 9.0, 12, 200, '15 MAY 26', 'Preseed',
-        (SELECT id FROM partner WHERE name = 'Keno Deary')),
+        (SELECT id FROM partner WHERE name = 'Paul Graham')),
        ('Palantir', 'DefenseTech', NULL, 8.7, 9, 750, '10 JUN 26', 'Seed',
         (SELECT id FROM partner WHERE name = 'Keno Deary')),
        ('Anthropic', 'AI', NULL, 9.8, 5, 1500, '01 AUG 26', 'Series A',
-        (SELECT id FROM partner WHERE name = 'Keno Deary')),
+        (SELECT id FROM partner WHERE name = 'Marc Andreessen')),
        ('SpaceX', 'Space', NULL, 7.8, 14, 150, '02 APR 26', 'Preseed',
         (SELECT id FROM partner WHERE name = 'Keno Deary')),
        ('Tesla', 'Tech', NULL, 6.5, 13, 250, '15 MAY 26', 'Preseed',
         (SELECT id FROM partner WHERE name = 'Keno Deary')),
-       ('Figma', 'SaaS', NULL, 8.8, 8, 600, '10 JUN 26', 'Seed', (SELECT id FROM partner WHERE name = 'Keno Deary')),
+       ('Figma', 'SaaS', NULL, 8.8, 8, 600, '10 JUN 26', 'Seed', (SELECT id FROM partner WHERE name = 'Peter Fenton')),
        ('OpenAI', 'AI', NULL, 9.2, 4, 4500, '01 AUG 26', 'Series B',
-        (SELECT id FROM partner WHERE name = 'Keno Deary')),
+        (SELECT id FROM partner WHERE name = 'Marc Andreessen')),
        ('Coinbase', 'FinTech', NULL, 7.5, 5, 3200, '02 APR 26', 'Series B',
-        (SELECT id FROM partner WHERE name = 'Keno Deary')),
-       ('Notion', 'SaaS', NULL, 8.7, 9, 750, '10 JUN 26', 'Seed',
-        (SELECT id FROM partner WHERE name = 'Keno Deary')),
-       ('Slack', 'SaaS', NULL, 8.7, 2, 25000, '10 JUN 26', 'Exit', (SELECT id FROM partner WHERE name = 'Keno Deary')),
-       ('Allbirds', 'AI', NULL, 8.5, 3, 9500, '01 AUG 26', 'Series C',
+        (SELECT id FROM partner WHERE name = 'Peter Fenton')),
+       ('Notion', 'SaaS', NULL, 8.7, 9, 750, '10 JUN 26', 'Seed', (SELECT id FROM partner WHERE name = 'Paul Graham')),
+       ('Slack', 'SaaS', NULL, 8.7, 2, 25000, '10 JUN 26', 'Exit',
+        (SELECT id FROM partner WHERE name = 'Peter Fenton')),
+       ('Allbirds', 'Consumer', NULL, 8.5, 3, 9500, '01 AUG 26', 'Series C',
         (SELECT id FROM partner WHERE name = 'Keno Deary'));
 
+-- ============================================================
+-- STARTUP FOUNDERS
+-- ============================================================
 INSERT INTO startup_founders (startup_id, founder_name)
-VALUES (1, 'Larry Page'),
-       (1, 'Sergey Brin');
+VALUES ((SELECT id FROM startup WHERE name = 'Google'), 'Larry Page'),
+       ((SELECT id FROM startup WHERE name = 'Google'), 'Sergey Brin'),
+       ((SELECT id FROM startup WHERE name = 'Stripe'), 'Patrick Collison'),
+       ((SELECT id FROM startup WHERE name = 'Stripe'), 'John Collison'),
+       ((SELECT id FROM startup WHERE name = 'Palantir'), 'Peter Thiel'),
+       ((SELECT id FROM startup WHERE name = 'Palantir'), 'Alex Karp'),
+       ((SELECT id FROM startup WHERE name = 'Palantir'), 'Joe Lonsdale'),
+       ((SELECT id FROM startup WHERE name = 'Anthropic'), 'Dario Amodei'),
+       ((SELECT id FROM startup WHERE name = 'Anthropic'), 'Daniela Amodei'),
+       ((SELECT id FROM startup WHERE name = 'SpaceX'), 'Elon Musk'),
+       ((SELECT id FROM startup WHERE name = 'Tesla'), 'Martin Eberhard'),
+       ((SELECT id FROM startup WHERE name = 'Tesla'), 'Marc Tarpenning'),
+       ((SELECT id FROM startup WHERE name = 'Tesla'), 'Elon Musk'),
+       ((SELECT id FROM startup WHERE name = 'Figma'), 'Dylan Field'),
+       ((SELECT id FROM startup WHERE name = 'Figma'), 'Evan Wallace'),
+       ((SELECT id FROM startup WHERE name = 'OpenAI'), 'Sam Altman'),
+       ((SELECT id FROM startup WHERE name = 'OpenAI'), 'Greg Brockman'),
+       ((SELECT id FROM startup WHERE name = 'OpenAI'), 'Ilya Sutskever'),
+       ((SELECT id FROM startup WHERE name = 'Coinbase'), 'Brian Armstrong'),
+       ((SELECT id FROM startup WHERE name = 'Coinbase'), 'Fred Ehrsam'),
+       ((SELECT id FROM startup WHERE name = 'Notion'), 'Ivan Zhao'),
+       ((SELECT id FROM startup WHERE name = 'Notion'), 'Simon Last'),
+       ((SELECT id FROM startup WHERE name = 'Slack'), 'Stewart Butterfield'),
+       ((SELECT id FROM startup WHERE name = 'Slack'), 'Cal Henderson'),
+       ((SELECT id FROM startup WHERE name = 'Slack'), 'Eric Costello'),
+       ((SELECT id FROM startup WHERE name = 'Allbirds'), 'Tim Brown'),
+       ((SELECT id FROM startup WHERE name = 'Allbirds'), 'Joey Zwillinger');
 
-INSERT INTO startup_founders (startup_id, founder_name)
-VALUES (2, 'Patrick Collison'),
-       (2, 'John Collison');
-
+-- ============================================================
+-- FUNDING BY ROUND  (amounts in USD)
+-- ============================================================
 INSERT INTO funding_by_round (startup_id, round_name, amount)
-VALUES (1, 'Preseed', 100000),
-       (1, 'Seed', 200000);
+VALUES
+    -- Google
+    ((SELECT id FROM startup WHERE name = 'Google'), 'Preseed', 100000),
+    ((SELECT id FROM startup WHERE name = 'Google'), 'Seed', 1000000),
+    ((SELECT id FROM startup WHERE name = 'Google'), 'Series A', 25000000),
+
+    -- Stripe
+    ((SELECT id FROM startup WHERE name = 'Stripe'), 'Preseed', 150000),
+    ((SELECT id FROM startup WHERE name = 'Stripe'), 'Seed', 2000000),
+
+    -- Palantir
+    ((SELECT id FROM startup WHERE name = 'Palantir'), 'Preseed', 500000),
+    ((SELECT id FROM startup WHERE name = 'Palantir'), 'Seed', 7500000),
+
+    -- Anthropic
+    ((SELECT id FROM startup WHERE name = 'Anthropic'), 'Preseed', 500000),
+    ((SELECT id FROM startup WHERE name = 'Anthropic'), 'Seed', 7400000),
+    ((SELECT id FROM startup WHERE name = 'Anthropic'), 'Series A', 124000000),
+
+    -- SpaceX
+    ((SELECT id FROM startup WHERE name = 'SpaceX'), 'Preseed', 100000000),
+
+    -- Tesla
+    ((SELECT id FROM startup WHERE name = 'Tesla'), 'Preseed', 7500000),
+
+    -- Figma
+    ((SELECT id FROM startup WHERE name = 'Figma'), 'Preseed', 3900000),
+    ((SELECT id FROM startup WHERE name = 'Figma'), 'Seed', 14000000),
+
+    -- OpenAI
+    ((SELECT id FROM startup WHERE name = 'OpenAI'), 'Preseed', 1000000),
+    ((SELECT id FROM startup WHERE name = 'OpenAI'), 'Seed', 130000000),
+    ((SELECT id FROM startup WHERE name = 'OpenAI'), 'Series A', 300000000),
+    ((SELECT id FROM startup WHERE name = 'OpenAI'), 'Series B', 10000000000),
+
+    -- Coinbase
+    ((SELECT id FROM startup WHERE name = 'Coinbase'), 'Preseed', 150000),
+    ((SELECT id FROM startup WHERE name = 'Coinbase'), 'Seed', 6000000),
+    ((SELECT id FROM startup WHERE name = 'Coinbase'), 'Series A', 25000000),
+    ((SELECT id FROM startup WHERE name = 'Coinbase'), 'Series B', 75000000),
+
+    -- Notion
+    ((SELECT id FROM startup WHERE name = 'Notion'), 'Preseed', 2000000),
+    ((SELECT id FROM startup WHERE name = 'Notion'), 'Seed', 10000000),
+
+    -- Slack
+    ((SELECT id FROM startup WHERE name = 'Slack'), 'Preseed', 1500000),
+    ((SELECT id FROM startup WHERE name = 'Slack'), 'Seed', 17000000),
+    ((SELECT id FROM startup WHERE name = 'Slack'), 'Series A', 43000000),
+    ((SELECT id FROM startup WHERE name = 'Slack'), 'Series B', 120000000),
+    ((SELECT id FROM startup WHERE name = 'Slack'), 'Series C', 160000000),
+
+    -- Allbirds
+    ((SELECT id FROM startup WHERE name = 'Allbirds'), 'Preseed', 100000),
+    ((SELECT id FROM startup WHERE name = 'Allbirds'), 'Seed', 2700000),
+    ((SELECT id FROM startup WHERE name = 'Allbirds'), 'Series A', 17500000),
+    ((SELECT id FROM startup WHERE name = 'Allbirds'), 'Series B', 50000000),
+    ((SELECT id FROM startup WHERE name = 'Allbirds'), 'Series C', 100000000);
+
+-- ============================================================
+-- APPLICATIONS
+-- ============================================================
+INSERT INTO application (name, sector, founder_email, founder_phone_number, target_round, deck_url, additional_comments,
+                         status, submitted_at)
+VALUES ('Google', 'Tech', 'larry@google.com', '6501234567', 'Series A', 'true', 'Dominating search globally.',
+        'APPROVED', '2026-01-05 09:00:00'),
+       ('Stripe', 'FinTech', 'patrick@stripe.com', '4151234567', 'Preseed', 'true',
+        'Payments infrastructure for the internet.', 'APPROVED', '2026-01-08 10:30:00'),
+       ('Palantir', 'DefenseTech', 'alex@palantir.com', '3101234567', 'Seed', 'true',
+        'Data analytics for gov and enterprise.', 'APPROVED', '2026-01-12 11:00:00'),
+       ('Anthropic', 'AI', 'dario@anthropic.com', '4151239999', 'Series A', 'true', 'Safety-focused frontier AI lab.',
+        'APPROVED', '2026-01-15 14:00:00'),
+       ('SpaceX', 'Space', 'elon@spacex.com', '3101239998', 'Preseed', 'true', 'Making humanity multiplanetary.',
+        'APPROVED', '2026-01-18 08:00:00'),
+       ('Tesla', 'Tech', 'martin@tesla.com', '6501239997', 'Preseed', 'true', 'Accelerating sustainable energy.',
+        'APPROVED', '2026-01-20 09:30:00'),
+       ('Figma', 'SaaS', 'dylan@figma.com', '4151237777', 'Seed', 'true', 'Collaborative design tool for teams.',
+        'APPROVED', '2026-01-22 13:00:00'),
+       ('OpenAI', 'AI', 'sam@openai.com', '6501236666', 'Series B', 'true', 'AGI for the benefit of all humanity.',
+        'APPROVED', '2026-01-25 10:00:00'),
+       ('Coinbase', 'FinTech', 'brian@coinbase.com', '4151235555', 'Series B', 'true',
+        'Trusted crypto exchange and wallet.', 'APPROVED', '2026-01-28 11:30:00'),
+       ('Notion', 'SaaS', 'ivan@notion.so', '4151234444', 'Seed', 'true', 'All-in-one workspace for teams.', 'PENDING',
+        '2026-02-01 09:00:00'),
+       ('Slack', 'SaaS', 'stewart@slack.com', '4151233333', 'Series C', 'true', 'Team messaging and workflow platform.',
+        'APPROVED', '2026-02-03 14:30:00'),
+       ('Allbirds', 'AI', 'tim@allbirds.com', '4151232222', 'Series C', 'true',
+        'Sustainable direct-to-consumer footwear.', 'APPROVED', '2026-02-05 10:00:00');
+
+-- ============================================================
+-- APPLICATION FOUNDERS
+-- ============================================================
+INSERT INTO application_founders (application_id, founder_name)
+VALUES ((SELECT id FROM application WHERE name = 'Google'), 'Larry Page'),
+       ((SELECT id FROM application WHERE name = 'Google'), 'Sergey Brin'),
+       ((SELECT id FROM application WHERE name = 'Stripe'), 'Patrick Collison'),
+       ((SELECT id FROM application WHERE name = 'Stripe'), 'John Collison'),
+       ((SELECT id FROM application WHERE name = 'Palantir'), 'Peter Thiel'),
+       ((SELECT id FROM application WHERE name = 'Palantir'), 'Alex Karp'),
+       ((SELECT id FROM application WHERE name = 'Palantir'), 'Joe Lonsdale'),
+       ((SELECT id FROM application WHERE name = 'Anthropic'), 'Dario Amodei'),
+       ((SELECT id FROM application WHERE name = 'Anthropic'), 'Daniela Amodei'),
+       ((SELECT id FROM application WHERE name = 'SpaceX'), 'Elon Musk'),
+       ((SELECT id FROM application WHERE name = 'Tesla'), 'Martin Eberhard'),
+       ((SELECT id FROM application WHERE name = 'Tesla'), 'Marc Tarpenning'),
+       ((SELECT id FROM application WHERE name = 'Tesla'), 'Elon Musk'),
+       ((SELECT id FROM application WHERE name = 'Figma'), 'Dylan Field'),
+       ((SELECT id FROM application WHERE name = 'Figma'), 'Evan Wallace'),
+       ((SELECT id FROM application WHERE name = 'OpenAI'), 'Sam Altman'),
+       ((SELECT id FROM application WHERE name = 'OpenAI'), 'Greg Brockman'),
+       ((SELECT id FROM application WHERE name = 'OpenAI'), 'Ilya Sutskever'),
+       ((SELECT id FROM application WHERE name = 'Coinbase'), 'Brian Armstrong'),
+       ((SELECT id FROM application WHERE name = 'Coinbase'), 'Fred Ehrsam'),
+       ((SELECT id FROM application WHERE name = 'Notion'), 'Ivan Zhao'),
+       ((SELECT id FROM application WHERE name = 'Notion'), 'Simon Last'),
+       ((SELECT id FROM application WHERE name = 'Slack'), 'Stewart Butterfield'),
+       ((SELECT id FROM application WHERE name = 'Slack'), 'Cal Henderson'),
+       ((SELECT id FROM application WHERE name = 'Slack'), 'Eric Costello'),
+       ((SELECT id FROM application WHERE name = 'Allbirds'), 'Tim Brown'),
+       ((SELECT id FROM application WHERE name = 'Allbirds'), 'Joey Zwillinger');
