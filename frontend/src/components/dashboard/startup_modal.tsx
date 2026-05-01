@@ -28,10 +28,20 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                                 <img src={"/images/google.png"} alt="Card description" className="card-img"/>
                                 <Modal.Title className="fw-bold">
                                     {startup.name} <br/>
-                                    <Badge bg="info" className="text-dark">{startup.sector}</Badge> <br/>
-                                    <span className="text-muted">{startup.stage} </span> <br/>
-                                    <h6>Founder: Larry Page</h6>
-                                    <h6>Email: larry@google.com</h6>
+                                    <Badge bg="info" className="text-dark">
+                                        {startup.sector}
+                                    </Badge> <br/>
+                                    <Badge bg="warning" className="text-dark">
+                                        {startup.stage}
+                                    </Badge> <br/>
+                                    {startup.founders && startup.founders.length > 0 && (
+                                        <div className="mt-2">
+                                            <h6 className="mb-1">{startup.founders.length === 1 ? 'Founder' : 'Founders'}:</h6>
+                                            {startup.founders.map((founder, index) => (
+                                                <h6 key={index}>{founder}</h6>
+                                            ))}
+                                        </div>
+                                    )}
 
                                 </Modal.Title>
                             </div>
@@ -46,13 +56,12 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                                 <span className="h4 mb-0">{startup.equity}%</span>
                             </div>
                             <div className="p-3 border rounded bg-light">
-                                <small className="text-uppercase text-muted d-block">Next Inject</small>
-                                <span className="h4 mb-0">$100k</span>
+                                <small className="text-uppercase text-muted d-block">Valuation</small>
+                                <span className="h4 mb-0">${startup.eval}k</span>
                             </div>
                         </div>
                         <div className="col-4">
-                            {/*<StartupCardFundingChart startup={startup}/>*/}
-                            <StartupCardFundingChart/>
+                            <StartupCardFundingChart startup={startup}/>
                         </div>
                     </div>
 
@@ -60,13 +69,13 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                         <div className="col-6">
                             <div className="p-3 border rounded bg-light mb-2">
                                 <small className="text-uppercase text-muted d-block">Projected Round Exit:</small>
-                                <span className="h6 mb-0">AUG 2026</span> <br/>
+                                <span className="h6 mb-0">{startup.projected_close || '—'}</span>
                             </div>
                         </div>
                         <div className="col-6">
                             <div className="p-3 border rounded bg-light mb-2">
                                 <small className="text-uppercase text-muted d-block">Primary Partner:</small>
-                                <span className="h6 mb-0">Keno Deary</span>
+                                <span className="h6 mb-0">{startup.partner?.name ?? 'Unassigned'}</span>
                             </div>
                         </div>
                     </div>

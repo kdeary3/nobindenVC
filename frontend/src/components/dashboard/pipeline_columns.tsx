@@ -50,10 +50,7 @@ const PipelineColumns = ({title, startups, onCardClick, onStartupAdded}: Pipelin
                 show={showAddStartupModal}
                 handleClose={() => setShowAddStartupModal(false)}
                 stage={title}
-                onSuccess={() => {
-                    setShowAddStartupModal(false);
-                    onStartupAdded();
-                }}
+                onSuccess={onStartupAdded}
             />
         </>
     );
