@@ -2,6 +2,7 @@ package nobinden.vc.startup;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.persistence.*;
 import nobinden.vc.partner.Partner;
 
@@ -28,8 +29,8 @@ public class Startup {
     private Double fundsAccrued;
 
     @JsonProperty("projected_close")
-    @Column(name = "projected_close")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd MMM yy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectedClose;
 
     private String stage;
@@ -49,8 +50,7 @@ public class Startup {
     @Column(name = "amount")
     private Map<String, Double> fundingByRound = new HashMap<>();
 
-    protected Startup() {
-    }
+    public Startup() {}
 
     public Startup(String name, String sector, String series, List<String> founders, Map<String, Double> funding_by_round, Partner partner) {
         this.name = name;

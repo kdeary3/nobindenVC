@@ -48,16 +48,31 @@ function AddStartup({show, handleClose, stage, onSuccess}: AddStartupProps) {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        await axiosSaveStartup({
-            ...form,
+
+        const payload = {
+            name: form.name,
+            sector: form.sector,
+            series: form.series,
             eval: Number(form.eval),
             equity: Number(form.equity),
             funds_accrued: 0,
-            stage,
-        } as Startup);
-        setForm(emptyForm);
-        handleClose();
-        onSuccess();
+            projected_close: form.projected_close || null,
+            stage: stage,
+            founders: [],
+            fundingByRound: {},
+            partner: null
+        };
+
+        console.log("Sending Payload:", payload); // Check this in your browser console!
+
+        try {
+            await axiosSaveStartup(payload as any);
+            setForm(emptyForm);
+            handleClose();
+            onSuccess();
+        } catch (error) {
+            console.error("The Server rejected the request. Check the Java console for the exact reason.");
+        }
     };
 
     return (
@@ -139,7 +154,7 @@ function AddStartup({show, handleClose, stage, onSuccess}: AddStartupProps) {
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Projected Close</Form.Label>
-                                    <Form.Control name="projected_close" value={form.projected_close}
+                                    <Form.Control type="date" name="projected_close" value={form.projected_close}
                                                   onChange={handleChange}/>
                                 </Form.Group>
 

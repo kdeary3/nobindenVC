@@ -1,7 +1,7 @@
 import type {Partner} from "../partner/partner_type.ts";
 
 export type Startup = {
-    id: number;
+    id?: number;
     name: string;
     sector: string;
     series: string;
