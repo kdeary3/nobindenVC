@@ -2,24 +2,13 @@ import {Badge, Card, Stack} from "react-bootstrap";
 import {dashboardStyle} from "./dashboard_style.tsx";
 import {Draggable} from "@hello-pangea/dnd";
 import type {Startup} from "../../startup/startup_type.ts";
+import {formatCurrency} from "./format_currency.tsx"
 
 type PipelineStartupCardProps = {
     startup: Startup;
     onClick: () => void;
     index: number;
 }
-
-const formatCurrency = (value: number) => {
-    if (!value && value !== 0) return "$0";
-
-    // If value is 1,000 (1,000k) or more, convert to Millions
-    if (value >= 1000) {
-        return `$${(value / 1000).toFixed(1)}M`;
-    }
-
-    // Otherwise keep it as k
-    return `$${value.toLocaleString()}k`;
-};
 
 function StartupCard({startup, onClick, index}: PipelineStartupCardProps) {
     const getEvalStyle = (score: number) => {

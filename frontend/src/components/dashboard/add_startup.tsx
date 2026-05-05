@@ -43,7 +43,8 @@ function AddStartup({show, handleClose, stage, onSuccess}: AddStartupProps) {
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setForm(prev => ({...prev, [event.target.name]: event.target.value}));
+        const {name, value} = event.target;
+        setForm(prev => ({...prev, [name]: value}));
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -58,9 +59,10 @@ function AddStartup({show, handleClose, stage, onSuccess}: AddStartupProps) {
             funds_accrued: 0,
             projected_close: form.projected_close || null,
             stage: stage,
-            founders: [],
+            founders: selectedApplication.founders || [],
             fundingByRound: {},
-            partner: null
+            partner: null,
+            startupNotes: []
         };
 
         console.log("Sending Payload:", payload); // Check this in your browser console!

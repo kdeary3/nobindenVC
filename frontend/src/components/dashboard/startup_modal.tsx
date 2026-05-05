@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import {Badge} from "react-bootstrap";
 import type {Startup} from "../../startup/startup_type.ts";
 import StartupCardFundingChart from "./startup_card_funding_chart.tsx";
+import {formatCurrency} from "./format_currency.tsx";
 
 type StartupModalProps = {
     show: boolean;
@@ -49,7 +50,7 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                         <div className="col-4">
                             <div className="p-3 border rounded bg-light mb-2">
                                 <small className="text-uppercase text-muted d-block">Total Funds Accrued</small>
-                                <span className="h4 mb-0">${startup.funds_accrued}k</span>
+                                <span className="h4 mb-0">{formatCurrency(startup.funds_accrued)}</span>
                             </div>
                             <div className="p-3 border rounded bg-light mb-2">
                                 <small className="text-uppercase text-muted d-block">Current Equity</small>
@@ -85,7 +86,11 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                                 <span className="h6 mb-0"> <strong>Notes:</strong></span> <br/>
                                 <span>
                                     <ul>
-                                        <li>Spoke with founders on Apr 15, was updated on current growth trends, updated MVP.</li>
+                                        {startup.startupNotes?.map((note, index) =>
+                                            <li key={index}>
+                                                {note}
+                                            </li>
+                                        )}
                                     </ul>
                                 </span>
                                 <button>+ Add Note</button>

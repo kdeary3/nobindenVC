@@ -207,3 +207,45 @@ VALUES ((SELECT id FROM application WHERE name = 'Google'), 'Larry Page'),
        ((SELECT id FROM application WHERE name = 'Slack'), 'Eric Costello'),
        ((SELECT id FROM application WHERE name = 'Allbirds'), 'Tim Brown'),
        ((SELECT id FROM application WHERE name = 'Allbirds'), 'Joey Zwillinger');
+
+-- ============================================================
+-- STARTUP NOTES
+-- ============================================================
+INSERT INTO startup_notes (startup_id, startup_notes)
+VALUES
+    -- Google
+    ((SELECT id FROM startup WHERE name = 'Google'), 'Early results on PageRank algorithm show 10x better relevance than AltaVista.'),
+    ((SELECT id FROM startup WHERE name = 'Google'), 'Scalability concerns regarding index storage; need to optimize hardware costs.'),
+    ((SELECT id FROM startup WHERE name = 'Google'), 'Exploring potential monetization through keyword-based advertising (AdWords).'),
+
+    -- Stripe
+    ((SELECT id FROM startup WHERE name = 'Stripe'), 'Developer experience is the key moat; APIs are significantly cleaner than competitors.'),
+    ((SELECT id FROM startup WHERE name = 'Stripe'), 'High churn risk in small e-commerce tier, but enterprise pipeline looks strong.'),
+
+    -- Palantir
+    ((SELECT id FROM startup WHERE name = 'Palantir'), 'Government contracts taking longer to close than anticipated; high CAC.'),
+    ((SELECT id FROM startup WHERE name = 'Palantir'), 'Forward Deployed Engineer model is proving effective for customer retention.'),
+
+    -- Anthropic
+    ((SELECT id FROM startup WHERE name = 'Anthropic'), 'Claude 3 Opus benchmarks exceed GPT-4 in reasoning; massive compute demand.'),
+    ((SELECT id FROM startup WHERE name = 'Anthropic'), 'Focusing on Constitutional AI as a differentiator for enterprise safety.'),
+
+    -- SpaceX
+    ((SELECT id FROM startup WHERE name = 'SpaceX'), 'Falcon 1 launch attempts are burning cash rapidly; high-stakes quarter ahead.'),
+    ((SELECT id FROM startup WHERE name = 'SpaceX'), 'Vertical integration of manufacturing is providing a 30% margin advantage.'),
+
+    -- OpenAI
+    ((SELECT id FROM startup WHERE name = 'OpenAI'), 'Initial transition from non-profit to capped-profit structure complete.'),
+    ((SELECT id FROM startup WHERE name = 'OpenAI'), 'ChatGPT growth is unprecedented; server capacity is the current primary bottleneck.'),
+
+    -- Figma
+    ((SELECT id FROM startup WHERE name = 'Figma'), 'Browser-based performance is impressive; catching up to Adobe Creative Cloud usage.'),
+    ((SELECT id FROM startup WHERE name = 'Figma'), 'Strong community-led growth via the community plugin marketplace.'),
+
+    -- Notion
+    ((SELECT id FROM startup WHERE name = 'Notion'), 'Bouncing back from 2021 outages; infrastructure has been significantly hardened.'),
+    ((SELECT id FROM startup WHERE name = 'Notion'), 'Excellent horizontal use-case penetration across design, eng, and HR teams.'),
+
+    -- Allbirds
+    ((SELECT id FROM startup WHERE name = 'Allbirds'), 'DTC margins under pressure due to rising supply chain costs.'),
+    ((SELECT id FROM startup WHERE name = 'Allbirds'), 'Product expansion into apparel has had mixed early reviews; need to refocus on core footwear.');

@@ -50,6 +50,11 @@ public class Startup {
     @Column(name = "amount")
     private Map<String, Double> fundingByRound = new HashMap<>();
 
+    @ElementCollection
+    @CollectionTable(name = "startup_notes", joinColumns = @JoinColumn(name = "startup_id"))
+    @Column(name = "startup_notes")
+    private List<String> startupNotes = new ArrayList<>();
+
     public Startup() {}
 
     public Startup(String name, String sector, String series, List<String> founders, Map<String, Double> funding_by_round, Partner partner) {
@@ -61,7 +66,7 @@ public class Startup {
         this.partner = partner;
     }
 
-    public Startup(String name, String sector, String series, Double eval, Double equity, Double fundsAccrued, LocalDate projectedClose, String stage, Partner partner, List<String> founders, Map<String, Double> fundingByRound) {
+    public Startup(String name, String sector, String series, Double eval, Double equity, Double fundsAccrued, LocalDate projectedClose, String stage, Partner partner, List<String> founders, Map<String, Double> fundingByRound, List<String> startupNotes) {
         this.name = name;
         this.sector = sector;
         this.series = series;
@@ -73,6 +78,7 @@ public class Startup {
         this.partner = partner;
         this.founders = founders;
         this.fundingByRound = fundingByRound;
+        this.startupNotes = startupNotes;
     }
 
     public Long getId() {
@@ -169,5 +175,13 @@ public class Startup {
 
     public void setStage(String stage) {
         this.stage = stage;
+    }
+
+    public List<String> getStartupNotes() {
+        return startupNotes;
+    }
+
+    public void setStartupNotes(List<String> startupNotes) {
+        this.startupNotes = startupNotes;
     }
 }
