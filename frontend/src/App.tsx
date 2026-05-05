@@ -1,6 +1,5 @@
 import NobindenNavbar from "./pages/navbar";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import {Container} from "react-bootstrap";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/home.tsx";
 import About from "./pages/about";
@@ -12,20 +11,18 @@ import Apply from "./pages/startups/apply.tsx";
 const App = () => {
     return (
         <Router>
-            <NobindenNavbar /> {/* Just the visual bar */}
-            <Container fluid className="px-5 py-4">
-                <Routes> {/* All logic lives here */}
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/partners/dashboard" element={<Dashboard />} />
-                    <Route path="/partners/startup-applications" element={<StartupApplications />} />
-                    <Route path="/portfolio" element={<Portfolio />} />
-                    <Route path="/startups/apply" element={<Apply />} />
-                    <Route path="/" element={<Home />} />
-                </Routes>
-            </Container>
+            <NobindenNavbar />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/about" element={<div className="nb-page-content"><About /></div>} />
+                <Route path="/partners/dashboard" element={<div className="nb-page-content"><Dashboard /></div>} />
+                <Route path="/partners/startup-applications" element={<div className="nb-page-content"><StartupApplications /></div>} />
+                <Route path="/startups/apply" element={<div className="nb-page-content"><Apply /></div>} />
+            </Routes>
         </Router>
     );
 };
 
-export default App
+export default App;
