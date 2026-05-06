@@ -33,9 +33,6 @@ const CompanyCard = ({ startup }: { startup: Startup }) => {
                 {startup.stage && (
                     <span className="nb-tag">{startup.stage}</span>
                 )}
-                {startup.series && (
-                    <span className="nb-tag nb-tag-dark">{startup.series}</span>
-                )}
             </div>
         </div>
     );
@@ -54,10 +51,10 @@ const Portfolio = () => {
     return (
         <>
             <div className="nb-portfolio-header">
-                <h1 className="nb-portfolio-title">Our Portfolio</h1>
-                <p className="nb-portfolio-subtitle">
+                <h1 className="nb-eyebrow mt-3">Our Portfilio</h1>
+                <h2 className="nb-portfolio-subtitle">
                     Companies we've backed from day one.
-                </p>
+                </h2>
             </div>
 
             {loading && (
