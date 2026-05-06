@@ -15,6 +15,8 @@ type StartupModalProps = {
 function StartupModal({show, handleClose, handleDelete, startup}: StartupModalProps) {
     if (!startup) return null;
 
+    const initial = startup.name.charAt(0).toUpperCase();
+
     return (
         <>
             <Modal show={show} onHide={handleClose} centered size="lg">
@@ -27,6 +29,15 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                         <div className="col-4">
                             <div className="p-3 border rounded bg-light mb-2">
                                 <img src={`/images/startup-logos/${startup.name.toLowerCase()}.png`} alt={`${startup.name} logo`} className="card-img"/>
+
+                                <div
+                                    className="nb-company-logo"
+                                    style={{ background: "black" }}
+                                >
+                                    {initial}
+                                </div>
+
+
                                 <Modal.Title className="fw-bold">
                                     {startup.name} <br/>
                                     <Badge bg="info" className="text-dark">
