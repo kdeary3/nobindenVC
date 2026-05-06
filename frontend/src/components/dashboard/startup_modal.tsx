@@ -26,12 +26,12 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                     <div className="row g-3">
                         <div className="col-4">
                             <div className="p-3 border rounded bg-light mb-2">
-                                <img src={"/images/google.png"} alt="Card description" className="card-img"/>
+                                <img src={`/images/startup-logos/${startup.name.toLowerCase()}.png`} alt={`${startup.name} logo`} className="card-img"/>
                                 <Modal.Title className="fw-bold">
                                     {startup.name} <br/>
                                     <Badge bg="info" className="text-dark">
                                         {startup.sector}
-                                    </Badge> <br/>
+                                    </Badge>
                                     <Badge bg="warning" className="text-dark">
                                         {startup.stage}
                                     </Badge> <br/>
