@@ -4,6 +4,7 @@ import {Badge} from "react-bootstrap";
 import type {Startup} from "../../startup/startup_type.ts";
 import StartupCardFundingChart from "./startup_card_funding_chart.tsx";
 import {formatCurrency} from "./format_currency.tsx";
+import {useState} from "react";
 
 type StartupModalProps = {
     show: boolean;
@@ -12,31 +13,46 @@ type StartupModalProps = {
     startup: Startup | null;
 }
 
+type ModalLogoProps = { startup_name: string }
+
+const ModalLogo = ({startup_name}: ModalLogoProps) => {
+    const [imgError, setImgError] = useState(false);
+    const initial = startup_name.charAt(0).toUpperCase();
+    const imgPath = `/images/startup-logos/${startup_name.toLowerCase()}.png`;
+
+    return (
+        <>
+            {!imgError ? (
+                <img src={imgPath}
+                     alt={`${startup_name} logo`} className="card-img"
+                     onError={() => setImgError(true)}
+                />
+            ) : (
+                <div
+                    className="nb-company-logo"
+                    style={{background: "black"}}
+                >
+                    {initial}
+                </div>
+            )}
+        </>
+    )
+}
+
+
 function StartupModal({show, handleClose, handleDelete, startup}: StartupModalProps) {
     if (!startup) return null;
-
-    const initial = startup.name.charAt(0).toUpperCase();
 
     return (
         <>
             <Modal show={show} onHide={handleClose} centered size="lg">
-                <Modal.Header closeButton>
-                </Modal.Header>
+                <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                    {/*<div className="mb-4 d-flex justify-content-between"><span>Founded:</span> 2009</div>*/}
-                    {/*<div className="mb-4 d-flex justify-content-between"><span>Primary Partner:</span> Name</div>*/}
                     <div className="row g-3">
                         <div className="col-4">
                             <div className="p-3 border rounded bg-light mb-2">
-                                <img src={`/images/startup-logos/${startup.name.toLowerCase()}.png`} alt={`${startup.name} logo`} className="card-img"/>
 
-                                <div
-                                    className="nb-company-logo"
-                                    style={{ background: "black" }}
-                                >
-                                    {initial}
-                                </div>
-
+                                <ModalLogo startup_name={startup.name}/>
 
                                 <Modal.Title className="fw-bold">
                                     {startup.name} <br/>
@@ -139,7 +155,8 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                 </Modal.Footer>
             </Modal>
         </>
-    );
+    )
+        ;
 }
 
 export default StartupModal;
