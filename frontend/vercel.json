@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://nobinden-api.onrender.com/api/:path*"
+      "destination": "https://nobindenvc.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
