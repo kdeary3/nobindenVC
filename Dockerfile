@@ -1,4 +1,4 @@
-FROM gradle:8.5-jdk21 AS build
+FROM gradle:9-jdk21 AS build
 WORKDIR /app
 COPY --chown=gradle:gradle . .
 RUN gradle bootJar --no-daemon
