@@ -6,7 +6,7 @@ spring:
     name: vc
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5469/nobinden
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5469/nobinden}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
