@@ -1,4 +1,3 @@
-
 export type Application = {
     id?: number
     name: string
@@ -7,7 +6,8 @@ export type Application = {
     founderEmail: string
     founderPhoneNumber: string
     targetRound: string
-    deckUrl?: boolean
+    deckFilename?: string
+    deckContentType?: string
     additionalComments?: string
     status: string
     submittedAt: string

@@ -2,7 +2,7 @@ import type {Application} from "./application_type";
 import axios, {type AxiosResponse} from "axios";
 
 type AxiosGetAllApplications = () => Promise<Application[]>
-type AxiosSaveApplication = (application: Application) => Promise<Application>
+type AxiosSaveApplication = (application: Application, deck?: File) => Promise<Application>
 type AxiosDeleteApplication = (id: number) => Promise<void>
 type AxiosUpdateApplication = (id: number, application: Application) => Promise<Application>
 
@@ -16,9 +16,18 @@ export const axiosGetAllApplications: AxiosGetAllApplications = () => {
         })
 }
 
-export const axiosSubmitApplication: AxiosSaveApplication = (application: Application) => {
+export const axiosSubmitApplication: AxiosSaveApplication = async (application, deck) => {
+    const formData = new FormData()
+    formData.append(
+        "application",
+        new Blob([JSON.stringify(application)], { type: "application/json" })
+    )
+    if (deck) {
+        formData.append("deck", deck)
+    }
+
     return axios
-        .post('/api/v1/application', application)
+        .post('/api/v1/application', formData)
         .then((response: AxiosResponse<Application>) => response.data)
         .catch((error: unknown) => {
             console.error('Failed to save application:', error)
@@ -26,7 +35,7 @@ export const axiosSubmitApplication: AxiosSaveApplication = (application: Applic
         })
 }
 
-export const axiosDeleteApplication: AxiosDeleteApplication = (id: number) => {
+export const axiosDeleteApplication: AxiosDeleteApplication = async (id: number) => {
     return axios
         .delete(`/api/v1/application/${id}`)
         .then((response: AxiosResponse<void>) => response.data)
@@ -36,7 +45,7 @@ export const axiosDeleteApplication: AxiosDeleteApplication = (id: number) => {
         })
 }
 
-export const axiosUpdateApplication: AxiosUpdateApplication = (id: number, application: Application) => {
+export const axiosUpdateApplication: AxiosUpdateApplication = async (id: number, application: Application) => {
     return axios
         .patch(`/api/v1/application/${id}`, application)
         .then((response: AxiosResponse<Application>) => response.data)
@@ -47,6 +56,6 @@ export const axiosUpdateApplication: AxiosUpdateApplication = (id: number, appli
 }
 
 export const axiosUpdateApplicationStatus = async (id: number, status: string) => {
-    const response = await axios.patch(`/api/v1/applications/${id}/status`, { status });
+    const response = await axios.patch(`/api/v1/application/${id}/status`, { status });
     return response.data;
 };
