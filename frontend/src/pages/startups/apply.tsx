@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useFieldArray, useForm} from 'react-hook-form';
-import {object, string, boolean, array, InferType} from 'yup';
+import {object, string, array, InferType} from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Alert, Button} from "react-bootstrap";
 import {axiosSubmitApplication} from "../../application/application_service.tsx";
@@ -8,6 +8,12 @@ import {axiosSubmitApplication} from "../../application/application_service.tsx"
 const Apply = () => {
 
     const [submitApplication, setSubmitApplication] = useState(false);
+
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+    const onFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
 
     const applicationValidation = object({
         startup_name: string()
@@ -40,7 +46,6 @@ const Apply = () => {
             .required("Please select a target round."),
         additional_comments: string()
             .max(200, "200 characters or less."),
-        upload_deck: boolean(),
     });
 
     const {
@@ -54,7 +59,6 @@ const Apply = () => {
         defaultValues: {
             founders: [{ name: "" }],
             target_round: "Preseed",
-            upload_deck: true
         }
     });
 
@@ -64,26 +68,29 @@ const Apply = () => {
     });
 
     type ApplicationForm = InferType<typeof applicationValidation>
+
     const onSubmit = async (data: ApplicationForm) => {
         try {
-            const timeApplicationSubmittedAt = new Date().toISOString()
-            await axiosSubmitApplication({
-                name: data.startup_name,
-                sector: data.startup_sector,
-                targetRound: data.target_round,
-                founders: data.founders.map(f => f.name),
-                founderEmail: data.email,
-                founderPhoneNumber: data.phone,
-                deckUrl: data.upload_deck,
-                additionalComments: data.additional_comments ?? "",
-                status: "Pending",
-                submittedAt: timeApplicationSubmittedAt
-            })
-            console.log("Submission Success:", data);
+            await axiosSubmitApplication(
+                {
+                    name: data.startup_name,
+                    sector: data.startup_sector,
+                    targetRound: data.target_round,
+                    founders: data.founders.map(f => f.name),
+                    founderEmail: data.email,
+                    founderPhoneNumber: data.phone,
+                    additionalComments: data.additional_comments ?? "",
+                    status: "Pending",
+                    submittedAt: new Date().toISOString(),
+                },
+                selectedFile ?? undefined
+            );
+
             setSubmitApplication(true);
+            setSelectedFile(null);
             reset();
         } catch (error) {
-            console.log("Failed to submit application:", error)
+            console.log("Failed to submit application:", error);
         }
     };
 
@@ -192,12 +199,14 @@ const Apply = () => {
                 </div>
 
                 {/* Upload Deck */}
-                <div className="form-check mb-3">
-                    <label className="form-check-label">Upload Deck</label>
+                <div className="mb-3">
+                    <label className="form-label">Upload Deck (PDF)</label>
                     <input
-                        type="checkbox"
-                        className="form-check-input"
-                        {...register("upload_deck")} />
+                        type="file"
+                        accept=".pdf"
+                        onChange={onFileChange}
+                        className="form-control"
+                    />
                 </div>
 
                 {/* Additional Comments */}
