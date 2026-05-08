@@ -14,4 +14,5 @@ export type Startup = {
     founders?: string[];
     fundingByRound?: Record<string, number>;
     startupNotes: String[]
+    applicationId?: number
 };
