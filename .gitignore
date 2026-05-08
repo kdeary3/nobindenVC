@@ -31,3 +31,17 @@ compose.yaml
 build
 
 uploads/decks
+
+# Backend
+build/
+.gradle/
+
+# Frontend
+node_modules/
+dist/
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
