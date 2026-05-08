@@ -15,7 +15,7 @@ const NobindenNavbar = () => {
 
                 <Navbar.Toggle aria-controls="main-nav"/>
                 <Navbar.Collapse id="main-nav">
-                    <Nav className="ms-auto align-items-center gap-3">
+                    <Nav className="ms-lg-auto align-items-center gap-3">
                         <LinkContainer to="/about"><Nav.Link>About</Nav.Link></LinkContainer>
                         <LinkContainer to="/partners/dashboard"><Nav.Link>Partners</Nav.Link></LinkContainer>
                         <LinkContainer to="/portfolio"><Nav.Link>Portfolio</Nav.Link></LinkContainer>
