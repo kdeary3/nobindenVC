@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {ChangeEvent, useState} from 'react';
 import {useFieldArray, useForm} from 'react-hook-form';
 import {object, string, array, InferType} from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -11,8 +11,8 @@ const Apply = () => {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    const onFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
+    const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setSelectedFile(event.target.files?.[0] ?? null);
     };
 
     const applicationValidation = object({

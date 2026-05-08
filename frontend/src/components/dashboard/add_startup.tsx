@@ -41,7 +41,7 @@ function AddStartup({show, handleClose, stage, onSuccess}: AddStartupProps) {
         }));
     };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const {name, value} = event.target;
         setForm(prev => ({...prev, [name]: value}));
     };
