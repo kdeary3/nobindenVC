@@ -101,7 +101,7 @@ const Apply = () => {
                     Application submitted successfully! A partner will reach out shortly.
                 </Alert>
             )}
-            <h1 className="nb-eyebrow mt-3">Apply</h1>
+            <h1 className="nb-eyebrow">Apply</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
                 {/* Startup Name Field */}
                 <div className="mb-3">
