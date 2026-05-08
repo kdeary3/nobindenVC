@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {Badge, Button, Col, Row, Form, Modal, Table} from 'react-bootstrap';
-import type {Startup} from '../../startup/startup_type.ts';
 import {axiosSaveStartup} from '../../startup/startup_service.ts';
 import type {Application} from "../../application/application_type.tsx";
 import {axiosGetAllApplications} from "../../application/application_service.tsx";
@@ -59,7 +58,7 @@ function AddStartup({show, handleClose, stage, onSuccess}: AddStartupProps) {
             funds_accrued: 0,
             projected_close: form.projected_close || null,
             stage: stage,
-            founders: selectedApplication.founders || [],
+            founders: selectedApplication?.founders || [],
             fundingByRound: {},
             partner: null,
             startupNotes: []
@@ -93,6 +92,7 @@ function AddStartup({show, handleClose, stage, onSuccess}: AddStartupProps) {
                                 <th>Sector</th>
                                 <th>Target Round</th>
                                 <th>Status</th>
+                                <th>Deck</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -111,6 +111,18 @@ function AddStartup({show, handleClose, stage, onSuccess}: AddStartupProps) {
                                             bg={application.status === 'APPROVED' ? 'success' : application.status === 'REJECTED' ? 'danger' : 'warning'}>
                                             {application.status}
                                         </Badge>
+                                    </td>
+                                    <td onClick={(e) => e.stopPropagation()}>
+                                        {application.deckFilename ? (
+                                            <a href={`/api/v1/application/${application.id}/deck`}
+                                               target="_blank"
+                                               rel="noopener noreferrer"
+                                               className="btn btn-outline-success">
+                                                See Deck
+                                            </a>
+                                            ) : (
+                                            <span className="text-muted">—</span>
+                                        )}
                                     </td>
                                 </tr>
                             ))}

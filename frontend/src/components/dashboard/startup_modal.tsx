@@ -139,9 +139,13 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                         </div>
 
                         <div className="col-4">
-                            <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-between">
-                                <button>See Most Recent Deck</button>
-                            </div>
+                            {startup.applicationId && (
+                                <a href={`/api/v1/application/${startup.applicationId}/deck`}
+                                   target="_blank" rel="noopener noreferrer"
+                                   className="btn btn-primary">
+                                    See Deck
+                                </a>
+                            )}
                         </div>
                     </div>
                 </Modal.Body>
