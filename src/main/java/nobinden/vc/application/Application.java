@@ -1,5 +1,6 @@
 package nobinden.vc.application;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -22,7 +23,17 @@ public class Application {
     private String founderEmail;
     private String founderPhoneNumber;
     private String targetRound;
-    private String deckUrl;
+
+    @JsonIgnore
+    @Column(name = "deck_file", columnDefinition = "BYTEA")
+    private byte[] deckFile;
+
+    @Column(name = "deck_filename")
+    private String deckFilename;
+
+    @Column(name = "deck_content_type")
+    private String deckContentType;
+
     private String additionalComments;
     private String status;
 
@@ -30,19 +41,18 @@ public class Application {
     @PrePersist
     protected void onSubmit() {
         this.submittedAt = LocalDateTime.now();
-        this.status = "Pending";
+        this.status = "PENDING";
     }
 
     protected Application() {}
 
-    public Application(String name, String sector, List<String> founders, String founderEmail, String founderPhoneNumber, String targetRound, String deckUrl, String additionalComments) {
+    public Application(String name, String sector, List<String> founders, String founderEmail, String founderPhoneNumber, String targetRound, String additionalComments) {
         this.name = name;
         this.sector = sector;
         this.founders = founders;
         this.founderEmail = founderEmail;
         this.founderPhoneNumber = founderPhoneNumber;
         this.targetRound = targetRound;
-        this.deckUrl = deckUrl;
         this.additionalComments = additionalComments;
     }
 
@@ -102,14 +112,6 @@ public class Application {
         this.targetRound = targetRound;
     }
 
-    public String getDeckUrl() {
-        return deckUrl;
-    }
-
-    public void setDeckUrl(String deckUrl) {
-        this.deckUrl = deckUrl;
-    }
-
     public String getAdditionalComments() {
         return additionalComments;
     }
@@ -132,5 +134,29 @@ public class Application {
 
     public void setSubmittedAt(LocalDateTime submittedAt) {
         this.submittedAt = submittedAt;
+    }
+
+    public byte[] getDeckFile() {
+        return deckFile;
+    }
+
+    public void setDeckFile(byte[] deckFile) {
+        this.deckFile = deckFile;
+    }
+
+    public String getDeckFilename() {
+        return deckFilename;
+    }
+
+    public void setDeckFilename(String deckFilename) {
+        this.deckFilename = deckFilename;
+    }
+
+    public String getDeckContentType() {
+        return deckContentType;
+    }
+
+    public void setDeckContentType(String deckContentType) {
+        this.deckContentType = deckContentType;
     }
 }

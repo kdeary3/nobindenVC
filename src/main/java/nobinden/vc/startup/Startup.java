@@ -1,7 +1,9 @@
 package nobinden.vc.startup;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import nobinden.vc.application.Application;
 import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.persistence.*;
 import nobinden.vc.partner.Partner;
@@ -54,6 +56,11 @@ public class Startup {
     @CollectionTable(name = "startup_notes", joinColumns = @JoinColumn(name = "startup_id"))
     @Column(name = "startup_notes")
     private List<String> startupNotes = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "application_id")
+    @JsonIgnore
+    private Application application;
 
     public Startup() {}
 
@@ -183,5 +190,17 @@ public class Startup {
 
     public void setStartupNotes(List<String> startupNotes) {
         this.startupNotes = startupNotes;
+    }
+
+    public Application getApplication() {
+        return application;
+    }
+
+    public void setApplication(Application application) {
+        this.application = application;
+    }
+
+    public Long getApplicationId() {
+        return application != null ? application.getId() : null;
     }
 }
