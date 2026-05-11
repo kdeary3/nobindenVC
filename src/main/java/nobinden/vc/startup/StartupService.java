@@ -3,6 +3,7 @@ package nobinden.vc.startup;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class StartupService {
@@ -31,5 +32,22 @@ public class StartupService {
 
     public void deleteStartupById(Long id) {
         startupRepository.deleteById(id);
+    }
+
+    public Startup addStartupNote(Long id, String note) {
+        Startup startup = startupRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("startup not found"));
+        startup.getStartupNotes().add(note);
+        return startupRepository.save(startup);
+    }
+
+    public Startup deleteStartupNote(Long id, String note) {
+        Startup startup = startupRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("startup not found"));
+        boolean removed = startup.getStartupNotes().remove(note);
+        if (!removed) {
+            throw new NoSuchElementException("note not found");
+        }
+        return startupRepository.save(startup);
     }
 }
