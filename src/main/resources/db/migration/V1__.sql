@@ -61,7 +61,7 @@ CREATE TABLE startup_founders
 CREATE TABLE startup_notes
 (
     startup_id    BIGINT NOT NULL,
-    startup_notes VARCHAR(255)
+    startup_notes TEXT
 );
 
 ALTER TABLE startup
