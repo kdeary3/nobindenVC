@@ -4,7 +4,8 @@ import {Badge} from "react-bootstrap";
 import type {Startup} from "../../startup/startup_type.ts";
 import StartupCardFundingChart from "./startup_card_funding_chart.tsx";
 import {formatCurrency} from "./format_currency.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import StartupNotes from "./add_delete_startup_note.tsx";
 
 type StartupModalProps = {
     show: boolean;
@@ -41,6 +42,14 @@ const ModalLogo = ({startup_name}: ModalLogoProps) => {
 
 
 function StartupModal({show, handleClose, handleDelete, startup}: StartupModalProps) {
+    const [notes, setNotes] = useState<string[]>([]);
+    const [confirmDelete, setConfirmDelete] = useState(false);
+
+    useEffect(() => {
+        setNotes(startup?.startupNotes || []);
+        setConfirmDelete(false);
+    }, [startup]);
+
     if (!startup) return null;
 
     return (
@@ -110,52 +119,86 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                     <div className="row g-3">
                         <div className="col-12">
                             <div className="p-3 border rounded bg-light mb-2">
-                                <span className="h6 mb-0"> <strong>Notes:</strong></span> <br/>
-                                <span>
-                                    <ul>
-                                        {startup.startupNotes?.map((note, index) =>
-                                            <li key={index}>
-                                                {note}
-                                            </li>
-                                        )}
-                                    </ul>
-                                </span>
-                                <button>+ Add Note</button>
+                                <span className="h6 mb-0"><strong>Notes:</strong></span>
+                                {startup.id && (
+                                    <StartupNotes
+                                        startupId={startup.id}
+                                        notes={notes}
+                                        onNoteAdded={(note) => setNotes(prev => [...prev, note])}
+                                        onNoteDeleted={(note) => setNotes(prev => prev.filter(n => n !== note))}
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
 
-                    <div className="row g-3">
+                    <div className="row g-3 align-items-center">
                         <div className="col-4">
-                            <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-between">
-                                <button>See Term Sheet</button>
+                            <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-center">
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary btn-sm mt-1"
+                                >
+                                    See Term Sheet
+                                </button>
                             </div>
                         </div>
 
                         <div className="col-4">
-                            <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-between">
-                                <button>See Cap Table</button>
+                            <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-center">
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary btn-sm mt-1"
+                                >
+                                    See Cap Table
+                                </button>
                             </div>
                         </div>
 
                         <div className="col-4">
-                            {startup.applicationId && (
-                                <a href={`/api/v1/application/${startup.applicationId}/deck`}
-                                   target="_blank" rel="noopener noreferrer"
-                                   className="btn btn-primary">
-                                    See Deck
-                                </a>
-                            )}
+                            <div className="p-3 border rounded bg-light mb-2 d-flex justify-content-center">
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary btn-sm mt-1"
+                                >
+                                    See Latest Deck
+                                </button>
+                            </div>
                         </div>
+
+                        {/*<div className="col-4">*/}
+                        {/*    {startup.applicationId && (*/}
+                        {/*        <a href={`/api/v1/application/${startup.applicationId}/deck`}*/}
+                        {/*           target="_blank" rel="noopener noreferrer"*/}
+                        {/*           className="btn btn-primary">*/}
+                        {/*            See Latest Deck*/}
+                        {/*        </a>*/}
+                        {/*    )}*/}
+                        {/*</div>*/}
+
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={handleDelete}>
-                        Delete
-                    </Button>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
+                    {confirmDelete ? (
+                        <>
+                            <span className="me-auto text-danger fw-semibold">Are you sure?</span>
+                            <Button variant="danger" onClick={handleDelete}>
+                                Confirm Delete
+                            </Button>
+                            <Button variant="outline-secondary" onClick={() => setConfirmDelete(false)}>
+                                Cancel
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <Button variant="danger" onClick={() => setConfirmDelete(true)}>
+                                Delete
+                            </Button>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                        </>
+                    )}
                 </Modal.Footer>
             </Modal>
         </>
