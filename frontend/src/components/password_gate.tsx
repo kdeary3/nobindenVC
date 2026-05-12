@@ -1,7 +1,7 @@
 import {useState, type ReactNode, type FormEvent} from 'react';
 import {Button, Form, Alert} from 'react-bootstrap';
 
-const DASHBOARD_PASSWORD = 'asdfghjkl;';  // change to whatever you want
+const DASHBOARD_PASSWORD = 'asdfghjkl;\'';  // change to whatever you want
 
 type PasswordGateProps = {
     children: ReactNode;
