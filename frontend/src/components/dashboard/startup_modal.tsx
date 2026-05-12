@@ -192,7 +192,7 @@ function StartupModal({show, handleClose, handleDelete, startup}: StartupModalPr
                     ) : (
                         <>
                             <Button variant="danger" onClick={() => setConfirmDelete(true)}>
-                                Delete
+                                <i className="fa-solid fa-trash-can"/> Delete
                             </Button>
                             <Button variant="secondary" onClick={handleClose}>
                                 Close

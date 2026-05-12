@@ -224,10 +224,12 @@ const Apply = () => {
                 {/* Submit Application Buttons */}
                 <div className="mb-3">
                     <Button type="submit" variant="success" className="me-2" disabled={isSubmitting}>
-                        <i className="fa-solid fa-check me-2"></i>
+                        <i className="fa-solid fa-check me-2"/>
                         {isSubmitting ? 'Submitting...' : 'Submit'}
                     </Button>
-                    <Button type="button" variant="danger" onClick={() => reset()}>Reset</Button>
+                    <Button type="button" variant="danger" onClick={() => reset()}>
+                        <i className="fa-solid fa-trash-can"/> &nbsp;
+                        Reset</Button>
                 </div>
 
                 {/*<ReservationSubmissionConfirmation*/}

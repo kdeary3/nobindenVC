@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {Badge, Table} from "react-bootstrap";
-import {axiosGetAllApplications} from "../../application/application_service";
+import {Badge, Table, Button} from "react-bootstrap";
+import {axiosGetAllApplications, axiosDeleteApplication} from "../../application/application_service";
 import type {Application} from "../../application/application_type";
 
 const statusVariant = (status: string) => {
@@ -11,12 +11,23 @@ const statusVariant = (status: string) => {
 
 const ReviewApplications = () => {
     const [applications, setApplications] = useState<Application[]>([]);
+    const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
 
     useEffect(() => {
         axiosGetAllApplications()
             .then(setApplications)
             .catch(console.error);
     }, []);
+
+    const handleDelete = async (id: number) => {
+        try {
+            await axiosDeleteApplication(id);
+            setApplications(prev => prev.filter(app => app.id !== id));
+            setConfirmDeleteId(null);
+        } catch (error) {
+            console.error("Failed to delete application:", error);
+        }
+    };
 
     return (
         <div className="p-4">
@@ -33,6 +44,7 @@ const ReviewApplications = () => {
                     <th>Pitch Deck</th>
                     <th>Submitted</th>
                     <th>Status</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,11 +83,39 @@ const ReviewApplications = () => {
                         <td>
                             <Badge bg={statusVariant(application.status)}>{application.status}</Badge>
                         </td>
+                        <td>
+                            {confirmDeleteId === application.id ? (
+                                <div className="d-flex gap-1">
+                                    <Button
+                                        size="sm"
+                                        variant="danger"
+                                        onClick={() => handleDelete(application.id!)}
+                                    >
+                                        Confirm
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        variant="outline-secondary"
+                                        onClick={() => setConfirmDeleteId(null)}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </div>
+                            ) : (
+                                <Button
+                                    size="sm"
+                                    variant="outline-danger"
+                                    onClick={() => setConfirmDeleteId(application.id!)}
+                                >
+                                    <i className="fa-solid fa-trash-can"/> Delete
+                                </Button>
+                            )}
+                        </td>
                     </tr>
                 ))}
                 {applications.length === 0 && (
                     <tr>
-                        <td colSpan={9} className="text-center text-muted py-4">
+                        <td colSpan={10} className="text-center text-muted py-4">
                             No applications submitted yet.
                         </td>
                     </tr>
