@@ -446,3 +446,41 @@ body {
     width: 100px;
     height: auto;
 }
+
+.nb-navbar .nb-partners-dropdown .dropdown-menu {
+    border: 1px solid var(--nb-border);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.nb-navbar .nb-partners-dropdown .dropdown-item {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.95rem;
+    color: var(--nb-gray);
+    transition: background 0.15s;
+}
+
+.nb-navbar .nb-partners-dropdown .dropdown-item:hover,
+.nb-navbar .nb-partners-dropdown .dropdown-item:focus {
+    background: var(--nb-light);
+    color: var(--nb-black);
+}
+
+.nb-navbar .nb-partners-dropdown .dropdown-item.active {
+    background: var(--nb-black);
+    color: var(--nb-white);
+}
+
+/* Also style the "Partners" toggle itself to match other nav links */
+.nb-navbar .nb-partners-dropdown .nav-link {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--nb-gray) !important;
+    padding: 0.375rem 0 !important;
+}
+
+.nb-navbar .nb-partners-dropdown .nav-link:hover {
+    color: var(--nb-black) !important;
+}

@@ -20,7 +20,7 @@ const ReviewApplications = () => {
 
     return (
         <div className="p-4">
-            <h1 className="h2 fw-bold mb-4">Startup Applications</h1>
+            <h1 className="nb-eyebrow mt-3">Startup Applications</h1>
             <Table hover responsive>
                 <thead>
                 <tr>
@@ -29,32 +29,55 @@ const ReviewApplications = () => {
                     <th>Target Round</th>
                     <th>Founders</th>
                     <th>Contact</th>
+                    <th>Comments</th>
                     <th>Pitch Deck</th>
                     <th>Submitted</th>
                     <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
-                {applications.map(startup => (
-                    <tr key={startup.id}>
-                        <td className="fw-semibold">{startup.name}</td>
-                        <td>{startup.sector}</td>
-                        <td>{startup.targetRound}</td>
-                        <td>{startup.founders.join(", ")}</td>
+                {applications.map(application => (
+                    <tr key={application.id}>
+                        <td className="fw-semibold">{application.name}</td>
+                        <td>{application.sector}</td>
+                        <td>{application.targetRound}</td>
+                        <td>{application.founders.join(", ")}</td>
                         <td>
-                            <div>{startup.founderEmail}</div>
-                            <small className="text-muted">{startup.founderPhoneNumber}</small>
+                            <div>{application.founderEmail}</div>
+                            <small className="text-muted">{application.founderPhoneNumber}</small>
                         </td>
-                        <td>{startup.deckUrl}</td>
-                        <td>{new Date(startup.submittedAt).toLocaleDateString()}</td>
                         <td>
-                            <Badge bg={statusVariant(startup.status)}>{startup.status}</Badge>
+                            <small>{application.additionalComments || <span className="text-muted">—</span>}</small>
+                        </td>
+                        <td>
+                            {application.deckFilename ? (
+                                <a href={`/api/v1/application/${application.id}/deck`}
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   className="btn btn-outline-primary btn-sm">
+                                    📄 View Deck
+                                </a>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary btn-sm"
+                                    disabled
+                                >
+                                    No Deck
+                                </button>
+                            )}
+                        </td>
+                        <td>{new Date(application.submittedAt).toLocaleDateString()}</td>
+                        <td>
+                            <Badge bg={statusVariant(application.status)}>{application.status}</Badge>
                         </td>
                     </tr>
                 ))}
                 {applications.length === 0 && (
                     <tr>
-                        <td colSpan={7} className="text-center text-muted py-4">No applications submitted yet.</td>
+                        <td colSpan={9} className="text-center text-muted py-4">
+                            No applications submitted yet.
+                        </td>
                     </tr>
                 )}
                 </tbody>

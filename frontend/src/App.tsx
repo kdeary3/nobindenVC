@@ -23,8 +23,11 @@ const App = () => {
                         <div className="nb-page-content"><Dashboard/></div>
                     </PasswordGate>
                 }/>
-                <Route path="/partners/startup-applications"
-                       element={<div className="nb-page-content"><StartupApplications/></div>}/>
+                <Route path="/partners/startup-applications" element={
+                    <PasswordGate>
+                        <StartupApplications/>
+                    </PasswordGate>
+                }/>
                 <Route path="/startups/apply" element={<div className="nb-page-content"><Apply/></div>}/>
             </Routes>
         </Router>
