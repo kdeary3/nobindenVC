@@ -1,7 +1,11 @@
 package nobinden.vc.application;
 
+import nobinden.vc.email.EmailService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,9 +19,13 @@ import java.util.UUID;
 public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;
+    private final EmailService emailService;
+    private static final Logger log = LoggerFactory.getLogger(ApplicationService.class);
 
-    public ApplicationService(ApplicationRepository applicationRepository) {
+
+    public ApplicationService(ApplicationRepository applicationRepository, EmailService emailService) {
         this.applicationRepository = applicationRepository;
+        this.emailService = emailService;
     }
 
     public Application saveApplicationWithDeck(Application application, MultipartFile deck) throws IOException {
@@ -26,7 +34,16 @@ public class ApplicationService {
             application.setDeckFilename(deck.getOriginalFilename());
             application.setDeckContentType(deck.getContentType());
         }
-        return applicationRepository.save(application);
+        Application saved = applicationRepository.save(application);
+
+        try {
+            emailService.sendNewApplicationNotification(saved);
+        } catch (Exception e) {
+            // Email failure should not block application submission
+            log.error("Email send failed but application was saved", e);
+        }
+
+        return saved;
     }
 
     public List<Application> saveAllApplications(List<Application> applications) {
