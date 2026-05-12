@@ -9,19 +9,6 @@ spring:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5469/nobinden}
     username: ${DATABASE_USERNAME:nobinden}
     password: ${DATABASE_PASSWORD:password}
-
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ${MAIL_USERNAME:}
-    password: ${MAIL_PASSWORD:}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
   jpa:
     generate-ddl: false
     hibernate:
@@ -36,6 +23,9 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+
+resend:
+  api-key: ${RESEND_API_KEY:}
 
 notification:
   recipient: ${NOTIFICATION_RECIPIENT:kenodeary3@gmail.com}
