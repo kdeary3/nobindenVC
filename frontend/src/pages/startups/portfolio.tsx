@@ -51,7 +51,7 @@ const Portfolio = () => {
     return (
         <>
             <div className="nb-portfolio-header">
-                <h1 className="nb-eyebrow mt-3">Our Portfilio</h1>
+                <h1 className="nb-eyebrow mt-3">Our Portfolio</h1>
                 <h2 className="nb-portfolio-subtitle">
                     Companies we've backed from day one.
                 </h2>
